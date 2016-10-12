@@ -43,7 +43,9 @@
 		@endforeach
 	@endif
         <!--/ END THEME STYLES -->
-
+        <link href="js/js-image-slider.css" rel="stylesheet" type="text/css" />
+        <script src="js/js-image-slider.js" type="text/javascript"></script>
+        <link href="js/generic.css" rel="stylesheet" type="text/css" />
     </head>
     <!--/ END HEAD -->
 
