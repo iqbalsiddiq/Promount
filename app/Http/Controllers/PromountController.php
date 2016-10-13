@@ -18,8 +18,6 @@ class PromountController extends Controller {
     public $css = [];
     // global js
     public $js = [];
-    // body class	
-    public $bodyClass = "page-session page-sound page-header-fixed page-sidebar-fixed";
     /**
      * Create a new controller instance.
      *
@@ -39,18 +37,19 @@ class PromountController extends Controller {
 
         // set global mandatory css
         $this->css = [
-            'globals' => ['global/plugins/bower_components/bootstrap/dist/css/bootstrap.min.css']
+            'globals' => [
+            'assets/css/bootstrap.min.css',
+            
+            ]
         ];
 
         $this->js = [
             'cores' => $this->getCoresJs(),
-            'ies' => $this->getIesJs()
         ];
 
         // pass variable to view
         View::share('assetUrl', $this->assetUrl);
         View::share('title', 'Promount');
-        View::share('bodyClass', $this->bodyClass);
         View::share('css', $this->css);
         View::share('js', $this->js);
     }
@@ -60,11 +59,11 @@ class PromountController extends Controller {
      * @return array blankon's core javascript plugins 
      */
     private function getCoresJs() {
-        return [
-            'global/plugins/bower_components/jquery/dist/jquery.min.js',
-            'global/plugins/bower_components/jquery-easing-original/jquery.easing.1.3.min.js',
-            'global/plugins/bower_components/bootstrap/dist/js/bootstrap.min.js',
-            'global/plugins/bower_components/retina.js/dist/retina.min.js'
+    return [
+        'assets/js/jquery-1.10.2.min.js',
+        'assets/js/jquery-migrate-1.2.1.js',
+        'assets/js/bootstrap.min.js',
+        'assets/js/jquery.easing-1.3.min.js',
         ];
     }
 
@@ -74,8 +73,8 @@ class PromountController extends Controller {
      */
     private function getIesJs() {
         return [
-            'global/plugins/bower_components/html5shiv/dist/html5shiv.min.js',
-            'global/plugins/bower_components/respond-minmax/dest/respond.min.js'
+           'assets/js/html5shiv.js',
+            'assets/js/respond.min.js'
         ];
     }
 

@@ -4,7 +4,6 @@ namespace Illuminate\Container;
 
 use Closure;
 use ArrayAccess;
-use LogicException;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionFunction;
@@ -604,20 +603,6 @@ class Container implements ArrayAccess, ContainerContract
     }
 
     /**
-     * Get a closure to resolve the given type from the container.
-     *
-     * @param  string  $abstract
-     * @param  array  $defaults
-     * @return \Closure
-     */
-    public function factory($abstract, array $defaults = [])
-    {
-        return function (array $params = []) use ($abstract, $defaults) {
-            return $this->make($abstract, $params + $defaults);
-        };
-    }
-
-    /**
      * Resolve the given type from the container.
      *
      * @param  string  $abstract
@@ -1085,17 +1070,11 @@ class Container implements ArrayAccess, ContainerContract
      *
      * @param  string  $abstract
      * @return string
-     *
-     * @throws \LogicException
      */
-    public function getAlias($abstract)
+    protected function getAlias($abstract)
     {
         if (! isset($this->aliases[$abstract])) {
             return $abstract;
-        }
-
-        if ($this->aliases[$abstract] === $abstract) {
-            throw new LogicException("[{$abstract}] is aliased to itself.");
         }
 
         return $this->getAlias($this->aliases[$abstract]);
@@ -1163,22 +1142,18 @@ class Container implements ArrayAccess, ContainerContract
      */
     public static function getInstance()
     {
-        if (is_null(static::$instance)) {
-            static::$instance = new static;
-        }
-
         return static::$instance;
     }
 
     /**
      * Set the shared instance of the container.
      *
-     * @param  \Illuminate\Contracts\Container\Container|null  $container
-     * @return static
+     * @param  \Illuminate\Contracts\Container\Container  $container
+     * @return void
      */
-    public static function setInstance(ContainerContract $container = null)
+    public static function setInstance(ContainerContract $container)
     {
-        return static::$instance = $container;
+        static::$instance = $container;
     }
 
     /**

@@ -119,11 +119,9 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      */
     public function fullUrlWithQuery(array $query)
     {
-        $question = $this->getBaseUrl().$this->getPathInfo() == '/' ? '/?' : '?';
-
         return count($this->query()) > 0
-            ? $this->url().$question.http_build_query(array_merge($this->query(), $query))
-            : $this->fullUrl().$question.http_build_query($query);
+                        ? $this->url().'/?'.http_build_query(array_merge($this->query(), $query))
+                        : $this->fullUrl().'?'.http_build_query($query);
     }
 
     /**
@@ -167,7 +165,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      */
     public function segments()
     {
-        $segments = explode('/', $this->decodedPath());
+        $segments = explode('/', $this->path());
 
         return array_values(array_filter($segments, function ($v) {
             return $v != '';
@@ -177,12 +175,13 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     /**
      * Determine if the current request URI matches a pattern.
      *
+     * @param  mixed  string
      * @return bool
      */
     public function is()
     {
         foreach (func_get_args() as $pattern) {
-            if (Str::is($pattern, $this->decodedPath())) {
+            if (Str::is($pattern, urldecode($this->path()))) {
                 return true;
             }
         }
@@ -193,6 +192,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     /**
      * Determine if the current request URL and query string matches a pattern.
      *
+     * @param  mixed  string
      * @return bool
      */
     public function fullUrlIs()
@@ -665,7 +665,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
             return $this->json();
         }
 
-        return $this->getRealMethod() == 'GET' ? $this->query : $this->request;
+        return $this->getMethod() == 'GET' ? $this->query : $this->request;
     }
 
     /**
@@ -694,16 +694,6 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
     public function isJson()
     {
         return Str::contains($this->header('CONTENT_TYPE'), ['/json', '+json']);
-    }
-
-    /**
-     * Determine if the current request probably expects a JSON response.
-     *
-     * @return bool
-     */
-    public function expectsJson()
-    {
-        return ($this->ajax() && ! $this->pjax()) || $this->wantsJson();
     }
 
     /**
@@ -864,32 +854,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      */
     public function duplicate(array $query = null, array $request = null, array $attributes = null, array $cookies = null, array $files = null, array $server = null)
     {
-        return parent::duplicate($query, $request, $attributes, $cookies, $this->filterFiles($files), $server);
-    }
-
-    /**
-     * Filter the given array of files, removing any empty values.
-     *
-     * @param  mixed  $files
-     * @return mixed
-     */
-    protected function filterFiles($files)
-    {
-        if (! $files) {
-            return;
-        }
-
-        foreach ($files as $key => $file) {
-            if (is_array($file)) {
-                $files[$key] = $this->filterFiles($files[$key]);
-            }
-
-            if (empty($files[$key])) {
-                unset($files[$key]);
-            }
-        }
-
-        return $files;
+        return parent::duplicate($query, $request, $attributes, $cookies, array_filter((array) $files), $server);
     }
 
     /**
@@ -946,13 +911,16 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      */
     public function fingerprint()
     {
-        if (! $route = $this->route()) {
+        if (! $this->route()) {
             throw new RuntimeException('Unable to generate fingerprint. Route unavailable.');
         }
 
-        return sha1(implode('|', array_merge(
-            $route->methods(), [$route->domain(), $route->uri(), $this->ip()]
-        )));
+        return sha1(
+            implode('|', $this->route()->methods()).
+            '|'.$this->route()->domain().
+            '|'.$this->route()->uri().
+            '|'.$this->ip()
+        );
     }
 
     /**
@@ -1046,7 +1014,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        $this->getInputSource()->set($offset, $value);
+        return $this->getInputSource()->set($offset, $value);
     }
 
     /**
@@ -1057,7 +1025,7 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        $this->getInputSource()->remove($offset);
+        return $this->getInputSource()->remove($offset);
     }
 
     /**
@@ -1079,10 +1047,12 @@ class Request extends SymfonyRequest implements Arrayable, ArrayAccess
      */
     public function __get($key)
     {
-        if ($this->offsetExists($key)) {
-            return $this->offsetGet($key);
-        }
+        $all = $this->all();
 
-        return $this->route($key);
+        if (array_key_exists($key, $all)) {
+            return $all[$key];
+        } else {
+            return $this->route($key);
+        }
     }
 }

@@ -3,7 +3,6 @@
 namespace Illuminate\Cache;
 
 use Memcached;
-use Carbon\Carbon;
 use Illuminate\Contracts\Cache\Store;
 
 class MemcachedStore extends TaggableStore implements Store
@@ -78,19 +77,19 @@ class MemcachedStore extends TaggableStore implements Store
      *
      * @param  string  $key
      * @param  mixed   $value
-     * @param  float|int  $minutes
+     * @param  int     $minutes
      * @return void
      */
     public function put($key, $value, $minutes)
     {
-        $this->memcached->set($this->prefix.$key, $value, $this->toTimestamp($minutes));
+        $this->memcached->set($this->prefix.$key, $value, $minutes * 60);
     }
 
     /**
      * Store multiple items in the cache for a given number of minutes.
      *
      * @param  array  $values
-     * @param  float|int  $minutes
+     * @param  int  $minutes
      * @return void
      */
     public function putMany(array $values, $minutes)
@@ -101,7 +100,7 @@ class MemcachedStore extends TaggableStore implements Store
             $prefixedValues[$this->prefix.$key] = $value;
         }
 
-        $this->memcached->setMulti($prefixedValues, $this->toTimestamp($minutes));
+        $this->memcached->setMulti($prefixedValues, $minutes * 60);
     }
 
     /**
@@ -109,12 +108,12 @@ class MemcachedStore extends TaggableStore implements Store
      *
      * @param  string  $key
      * @param  mixed   $value
-     * @param  float|int  $minutes
+     * @param  int     $minutes
      * @return bool
      */
     public function add($key, $value, $minutes)
     {
-        return $this->memcached->add($this->prefix.$key, $value, $this->toTimestamp($minutes));
+        return $this->memcached->add($this->prefix.$key, $value, $minutes * 60);
     }
 
     /**
@@ -172,17 +171,6 @@ class MemcachedStore extends TaggableStore implements Store
     public function flush()
     {
         $this->memcached->flush();
-    }
-
-    /**
-     * Get the UNIX timestamp for the given number of minutes.
-     *
-     * @parma  int  $minutes
-     * @return int
-     */
-    protected function toTimestamp($minutes)
-    {
-        return $minutes > 0 ? Carbon::now()->addMinutes($minutes)->getTimestamp() : 0;
     }
 
     /**
