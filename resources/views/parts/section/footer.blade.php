@@ -4,16 +4,18 @@
     <div class="container">
         <div class="row no-margin widgets-row">
             <div class="col-xs-12  col-sm-4 no-margin-left">
-               
-                @include('parts/widgets/footer.featured-products-footer')
+               @include('parts/widgets/footer.featured-products-footer',array('featuredf'=>DB::table('item')->where('featured','1')->skip(0)->take(3)->get()))
+                
             </div><!-- /.col -->
 
             <div class="col-xs-12 col-sm-4 ">
-                @include('parts/widgets/footer.on-sale-products-footer')
+                @include('parts/widgets/footer.on-sale-products-footer',array('onsale'=>DB::table('item')->where('sale','1')->skip(0)->take(3)->get()))
+                
             </div><!-- /.col -->
 
             <div class="col-xs-12 col-sm-4 ">
-                @include('parts/widgets/footer.top-rated-products-footer')
+                 @include('parts/widgets/footer.top-rated-products-footer',array('toprate'=>DB::table('item')->where('topdeals','1')->skip(0)->take(3)->get()))
+                
             </div><!-- /.col -->
 
         </div><!-- /.widgets-row-->

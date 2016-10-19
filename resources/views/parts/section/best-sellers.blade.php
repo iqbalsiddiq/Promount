@@ -12,7 +12,7 @@
                     <div class="col-xs-12 col-sm-4 no-margin product-item-holder size-medium hover">
                         <div class="product-item">
                             <div class="image">
-                                <img alt="" src="{{$item->image}}" data-echo="{{$item->image}}" />
+                                <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" />
                             </div>
                             <div class="body">
                                 <div class="label-discount clear"></div>
@@ -44,27 +44,18 @@
                 <div class="product-item-holder size-big single-product-gallery small-gallery">
                     
                     <div id="best-seller-single-product-slider" class="single-product-slider owl-carousel">
-                        <div class="single-product-gallery-item" id="slide1">
-                            <a data-rel="prettyphoto" href="images/products/product-gallery-01.jpg">
-                                <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-gallery-01.jpg" />
+                    @foreach ($topdeals as $item )
+                        <div class="single-product-gallery-item" id="{{$item->id}}">
+                            <a data-rel="prettyphoto" href="assets/images/item/{{$item->image}}">
+                                <img alt="" src="assets/images/blank.gif" data-echo="assets/images/item/{{$item->image}}" />
                             </a>
-                        </div><!-- /.single-product-gallery-item -->
-
-                        <div class="single-product-gallery-item" id="slide2">
-                            <a data-rel="prettyphoto" href="images/products/product-gallery-01.jpg">
-                                <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-gallery-01.jpg" />
-                            </a>
-                        </div><!-- /.single-product-gallery-item -->
-
-                        <div class="single-product-gallery-item" id="slide3">
-                            <a data-rel="prettyphoto" href="images/products/product-gallery-01.jpg">
-                                <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-gallery-01.jpg" />
-                            </a>
-                        </div><!-- /.single-product-gallery-item -->
+                        </div><!-- /.single-product-gallery-item --> 
+                    @endforeach
                     </div><!-- /.single-product-slider -->
-
+                    
                     <div class="gallery-thumbs clearfix">
                         <ul>
+
                             <li><a class="horizontal-thumb active" data-target="#best-seller-single-product-slider" data-slide="0" href="#slide1"><img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/gallery-thumb-01.jpg" /></a></li>
                             <li><a class="horizontal-thumb" data-target="#best-seller-single-product-slider" data-slide="1" href="#slide2"><img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/gallery-thumb-01.jpg" /></a></li>
                             <li><a class="horizontal-thumb" data-target="#best-seller-single-product-slider" data-slide="2" href="#slide3"><img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/gallery-thumb-01.jpg" /></a></li>
@@ -74,9 +65,9 @@
                     <div class="body">
                         <div class="label-discount clear"></div>
                         <div class="title">
-                            <a href="index.php?page=single-product">CPU intel core i5-4670k 3.4GHz BOX B82-12-122-41</a>
+                            <a href="index.php?page=single-product"><?php echo $item->title; ?></a>
                         </div>
-                        <div class="brand">sony</div>
+                        <div class="brand"><?php echo $item->detail; ?></div>
                     </div>
                     <div class="prices text-right">
                         <div class="price-current inline">$1199.00</div>

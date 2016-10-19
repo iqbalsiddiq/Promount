@@ -12,22 +12,36 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="featured">
                     <div class="product-grid-holder">
+                     <?php
+                                $tabsFeatured =DB::table('item')->orderByRaw("RAND()")->where('featured', '1')->skip(0)->take(4)->get();
+                                foreach ($tabsFeatured as $item ):          
+                                ?>
                         <div class="col-sm-4 col-md-3  no-margin product-item-holder hover">
+                            
                             <div class="product-item">
-                                <div class="ribbon red"><span>sale</span></div> 
+                                <?php 
+                                    if ($item->sale=='1'){
+                                          echo '<div class="ribbon red"><span>sale</span></div>'; 
+                                    }
+                                    if ($item->new=='1'){
+                                          echo '<div class="ribbon blue"><span>new</span></div>'; 
+                                    }
+                                ?> 
                                 <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-01.jpg" />
+                                    <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" />
                                 </div>
                                 <div class="body">
-                                    <div class="label-discount green">-50% sale</div>
+                                    <div class="label-discount green">{{$item->discount}}</div>
                                     <div class="title">
-                                        <a href="index.php?page=single-product">VAIO Fit Laptop - Windows 8 SVF14322CXW</a>
+                                        <a href="index.php?page=single-product">{{$item->title}}</a>
                                     </div>
-                                    <div class="brand">sony</div>
+                                    <div class="brand">{{$item->detail}}</div>
                                 </div>
                                 <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
+                                    <div class="price-prev">{{$item->price}}</div>
+                                    <div class="price-current">{{$item->price-($item->price*$item->discount/100)}}</div>
+                                    <div class="price-current pull-right">{{$item->detail}}</div>
+
                                 </div>
 
                                 <div class="hover-area">
@@ -40,93 +54,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                            <div class="product-item">
-                                <div class="ribbon blue"><span>new!</span></div> 
-                                <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-02.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="label-discount clear"></div>
-                                    <div class="title">
-                                        <a href="index.php?page=single-product">White lumia 9001</a>
-                                    </div>
-                                    <div class="brand">nokia</div>
-                                </div>
-                                <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
-                                </div>
-                                <div class="hover-area">
-                                    <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
-                                    </div>
-                                    <div class="wish-compare">
-                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                        <a class="btn-add-to-compare" href="#">compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                            <div class="product-item">
-
-                                <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-03.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="label-discount clear"></div>
-                                    <div class="title">
-                                        <a href="index.php?page=single-product">POV Action Cam</a>
-                                    </div>
-                                    <div class="brand">sony</div>
-                                </div>
-                                <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
-                                </div>
-                                <div class="hover-area">
-                                    <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
-                                    </div>
-                                    <div class="wish-compare">
-                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                        <a class="btn-add-to-compare" href="#">compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                            <div class="product-item">
-                                <div class="ribbon red"><span>sale</span></div> 
-                                <div class="ribbon green"><span>bestseller</span></div> 
-                                <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-04.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="label-discount clear"></div>
-                                    <div class="title">
-                                        <a href="index.php?page=single-product">Netbook Acer TravelMate 
-                                            B113-E-10072</a>
-                                    </div>
-                                    <div class="brand">acer</div>
-                                </div>
-                                <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
-                                </div>
-                                <div class="hover-area">
-                                    <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
-                                    </div>
-                                    <div class="wish-compare">
-                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                        <a class="btn-add-to-compare" href="#">compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div> 
+                        <?php endforeach ?> 
                     </div>
                     <div class="loadmore-holder text-center">
                         <a class="btn-loadmore" href="#">
@@ -136,53 +65,36 @@
 
                 </div>
                 <div class="tab-pane" id="new-arrivals">
-                    <div class="product-grid-holder">
-                        
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
+                       <div class="product-grid-holder">
+                       <?php
+                                $tabsFeatured =DB::table('item')->orderByRaw("RAND()")->where('newdeals', '1')->skip(0)->take(4)->get();
+                                foreach ($tabsFeatured as $item ):          
+                                ?>
+                        <div class="col-sm-4 col-md-3  no-margin product-item-holder hover">
+                             
                             <div class="product-item">
-                                <div class="ribbon blue"><span>new!</span></div> 
+                                <?php 
+                                    if ($item->sale=='1'){
+                                          echo '<div class="ribbon red"><span>sale</span></div>'; 
+                                    }
+                                    if ($item->new=='1'){
+                                          echo '<div class="ribbon blue"><span>new</span></div>'; 
+                                    }
+                                ?> 
                                 <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-02.jpg" />
+                                    <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" />
                                 </div>
                                 <div class="body">
-                                    <div class="label-discount clear"></div>
+                                    <div class="label-discount green">{{$item->discount}}</div>
                                     <div class="title">
-                                        <a href="index.php?page=single-product">White lumia 9001</a>
+                                        <a href="index.php?page=single-product">{{$item->title}}</a>
                                     </div>
-                                    <div class="brand">nokia</div>
+                                    <div class="brand">{{$item->detail}}</div>
                                 </div>
                                 <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
-                                </div>
-                                <div class="hover-area">
-                                    <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
-                                    </div>
-                                    <div class="wish-compare">
-                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                        <a class="btn-add-to-compare" href="#">compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                            <div class="product-item">
-                                <div class="ribbon red"><span>sale</span></div> 
-                                <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-01.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="label-discount green">-50% sale</div>
-                                    <div class="title">
-                                        <a href="index.php?page=single-product">VAIO Fit Laptop - Windows 8 SVF14322CXW</a>
-                                    </div>
-                                    <div class="brand">sony</div>
-                                </div>
-                                <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
+                                    <div class="price-prev">{{$item->price}}</div>
+                                    <div class="price-current">{{$item->price-($item->price*$item->discount/100)}}</div>
+                                    <div class="price-current pull-right">{{$item->detail}}</div>
                                 </div>
 
                                 <div class="hover-area">
@@ -195,68 +107,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                            <div class="product-item">
-                                <div class="ribbon red"><span>sale</span></div> 
-                                <div class="ribbon green"><span>bestseller</span></div> 
-                                <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-04.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="label-discount clear"></div>
-                                    <div class="title">
-                                        <a href="index.php?page=single-product">Netbook Acer TravelMate 
-                                            B113-E-10072</a>
-                                    </div>
-                                    <div class="brand">acer</div>
-                                </div>
-                                <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
-                                </div>
-                                <div class="hover-area">
-                                    <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
-                                    </div>
-                                    <div class="wish-compare">
-                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                        <a class="btn-add-to-compare" href="#">compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                            <div class="product-item">
-
-                                <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-03.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="label-discount clear"></div>
-                                    <div class="title">
-                                        <a href="index.php?page=single-product">POV Action Cam</a>
-                                    </div>
-                                    <div class="brand">sony</div>
-                                </div>
-                                <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
-                                </div>
-                                <div class="hover-area">
-                                    <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
-                                    </div>
-                                    <div class="wish-compare">
-                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                        <a class="btn-add-to-compare" href="#">compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        </div> 
+                        <?php endforeach ?> 
                     </div>
                     <div class="loadmore-holder text-center">
                         <a class="btn-loadmore" href="#">
@@ -267,114 +119,36 @@
                 </div>
 
                 <div class="tab-pane" id="top-sales">
-                    <div class="product-grid-holder">
-
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
+                       <div class="product-grid-holder">
+                       <?php
+                                $tabsFeatured =DB::table('item')->orderByRaw("RAND()")->where('topdeals', '1')->skip(0)->take(4)->get();
+                                foreach ($tabsFeatured as $item ):          
+                                ?>
+                        <div class="col-sm-4 col-md-3  no-margin product-item-holder hover">
+                             
                             <div class="product-item">
-                                <div class="ribbon red"><span>sale</span></div> 
-                                <div class="ribbon green"><span>bestseller</span></div> 
+                                <?php 
+                                    if ($item->sale=='1'){
+                                          echo '<div class="ribbon red"><span>sale</span></div>'; 
+                                    }
+                                    if ($item->new=='1'){
+                                          echo '<div class="ribbon blue"><span>new</span></div>'; 
+                                    }
+                                ?> 
                                 <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-04.jpg" />
+                                    <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" />
                                 </div>
                                 <div class="body">
-                                    <div class="label-discount clear"></div>
+                                    <div class="label-discount green">{{$item->discount}}</div>
                                     <div class="title">
-                                        <a href="index.php?page=single-product">Netbook Acer TravelMate 
-                                            B113-E-10072</a>
+                                        <a href="index.php?page=single-product">{{$item->title}}</a>
                                     </div>
-                                    <div class="brand">acer</div>
+                                    <div class="brand">{{$item->detail}}</div>
                                 </div>
                                 <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
-                                </div>
-                                <div class="hover-area">
-                                    <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
-                                    </div>
-                                    <div class="wish-compare">
-                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                        <a class="btn-add-to-compare" href="#">compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                            <div class="product-item">
-
-                                <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-03.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="label-discount clear"></div>
-                                    <div class="title">
-                                        <a href="index.php?page=single-product">POV Action Cam</a>
-                                    </div>
-                                    <div class="brand">sony</div>
-                                </div>
-                                <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
-                                </div>
-                                <div class="hover-area">
-                                    <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
-                                    </div>
-                                    <div class="wish-compare">
-                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                        <a class="btn-add-to-compare" href="#">compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                            <div class="product-item">
-                                <div class="ribbon blue"><span>new!</span></div> 
-                                <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-02.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="label-discount clear"></div>
-                                    <div class="title">
-                                        <a href="index.php?page=single-product">White lumia 9001</a>
-                                    </div>
-                                    <div class="brand">nokia</div>
-                                </div>
-                                <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
-                                </div>
-                                <div class="hover-area">
-                                    <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
-                                    </div>
-                                    <div class="wish-compare">
-                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
-                                        <a class="btn-add-to-compare" href="#">compare</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-4 col-md-3 no-margin product-item-holder hover">
-                            <div class="product-item">
-                                <div class="ribbon red"><span>sale</span></div> 
-                                <div class="image">
-                                    <img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/product-01.jpg" />
-                                </div>
-                                <div class="body">
-                                    <div class="label-discount green">-50% sale</div>
-                                    <div class="title">
-                                        <a href="index.php?page=single-product">VAIO Fit Laptop - Windows 8 SVF14322CXW</a>
-                                    </div>
-                                    <div class="brand">sony</div>
-                                </div>
-                                <div class="prices">
-                                    <div class="price-prev">$1399.00</div>
-                                    <div class="price-current pull-right">$1199.00</div>
+                                    <div class="price-prev">{{$item->price}}</div>
+                                    <div class="price-current">{{$item->price-($item->price*($item->discount/100))}}</div>
+                                    <div class="price-current pull-right">{{$item->detail}}</div>
                                 </div>
 
                                 <div class="hover-area">
@@ -387,8 +161,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> 
+                        <?php endforeach ?> 
                     </div>
                     <div class="loadmore-holder text-center">
                         <a class="btn-loadmore" href="#">
