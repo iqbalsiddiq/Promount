@@ -33,7 +33,7 @@
                                 <div class="body">
                                     <div class="label-discount green">{{$item->discount}}</div>
                                     <div class="title">
-                                        <a href="index.php?page=single-product">{{$item->title}}</a>
+                                        <a href="/products?ID={{$item->id}}">{{$item->title}}</a>
                                     </div>
                                     <div class="brand">{{$item->detail}}</div>
                                 </div>
@@ -46,7 +46,7 @@
 
                                 <div class="hover-area">
                                     <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
+                                        <a href="/cart" class="le-button">add to cart</a>
                                     </div>
                                     <div class="wish-compare">
                                         <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
@@ -87,7 +87,7 @@
                                 <div class="body">
                                     <div class="label-discount green">{{$item->discount}}</div>
                                     <div class="title">
-                                        <a href="index.php?page=single-product">{{$item->title}}</a>
+                                        <a href="/products?ID={{$item->id}}">{{$item->title}}</a>
                                     </div>
                                     <div class="brand">{{$item->detail}}</div>
                                 </div>
@@ -99,7 +99,7 @@
 
                                 <div class="hover-area">
                                     <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
+                                        <a href="/cart" class="le-button">add to cart</a>
                                     </div>
                                     <div class="wish-compare">
                                         <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
@@ -141,7 +141,7 @@
                                 <div class="body">
                                     <div class="label-discount green">{{$item->discount}}</div>
                                     <div class="title">
-                                        <a href="index.php?page=single-product">{{$item->title}}</a>
+                                         <a href="/products?ID={{$item->id}}">{{$item->title}}</a>
                                     </div>
                                     <div class="brand">{{$item->detail}}</div>
                                 </div>
@@ -153,7 +153,7 @@
 
                                 <div class="hover-area">
                                     <div class="add-cart-button">
-                                        <a href="index.php?page=single-product" class="le-button">add to cart</a>
+                                        <a href="/cart" class="le-button">add to cart</a>
                                     </div>
                                     <div class="wish-compare">
                                         <a class="btn-add-to-wishlist" href="#">add to wishlist</a>

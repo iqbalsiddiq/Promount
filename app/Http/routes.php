@@ -12,4 +12,6 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('/products', 'ProductController@index');
+Route::get('/cart', 'CartController@index');
 Route::get('page/signin', 'AuthenticationController@index');

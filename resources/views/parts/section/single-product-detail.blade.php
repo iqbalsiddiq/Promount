@@ -1,4 +1,4 @@
-<div class="no-margin col-xs-12 col-sm-7 body-holder">
+<div class="no-margin col-xs-4 col-sm-4 body-holder">
     <div class="body">
         <div class="star-holder inline"><div class="star" data-score="4"></div></div>
         <div class="availability"><label>Availability:</label><span class="available">  in stock</span></div>

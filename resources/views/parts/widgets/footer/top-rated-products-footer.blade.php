@@ -7,7 +7,7 @@
             <li>
                 <div class="row">
                     <div class="col-xs-12 col-sm-9 no-margin">
-                        <a href="index.php?page=single-product">{{$item->title}}</a>
+                       <a href="/products?ID={{$item->id}}">{{$item->title}}</a>
                         <div class="price">
                             <div class="price-prev">{{$item->price}}</div>
                             <div class="price-current">{{$item->price-($item->price*$item->discount/100)}}</div>

@@ -1,5 +1,10 @@
-<section id="cart-page">
+
+
+@extends('layout.lay_home')
+@section('content') 
+<div id="top-banner-and-menu">
     <div class="container">
+         <div id="single-product">
         <!-- ========================================= CONTENT ========================================= -->
         <div class="col-xs-12 col-md-9 items-holder no-margin">
             
@@ -37,107 +42,7 @@
                 </div>
             </div><!-- /.cart-item -->
 
-            <div class="row no-margin cart-item">
-                <div class="col-xs-12 col-sm-2 no-margin">
-                    <a href="#" class="thumb-holder">
-                        <img class="lazy" alt="" src="http://placehold.it/73x73" />
-                    </a>
-                </div>
-
-                <div class="col-xs-12 col-sm-5">
-                    <div class="title">
-                        <a href="#">white lumia 9001 </a>
-                    </div>
-                    <div class="brand">sony</div>
-                </div> 
-
-                <div class="col-xs-12 col-sm-3 no-margin">
-                    <div class="quantity">
-                        <div class="le-quantity">
-                            <form>
-                                <a class="minus" href="#reduce"></a>
-                                <input name="quantity" readonly="readonly" type="text" value="1" />
-                                <a class="plus" href="#add"></a>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-2 no-margin">
-                    <div class="price">
-                        $2000.00
-                    </div>
-                    <a class="close-btn" href="#"></a>
-                </div>
-            </div><!-- /.cart-item -->
-
-            <div class="row no-margin cart-item">
-                <div class="col-xs-12 col-sm-2 no-margin">
-                    <a href="#" class="thumb-holder">
-                        <img class="lazy" alt="" src="http://placehold.it/73x73" />
-                    </a>
-                </div>
-
-                <div class="col-xs-12 col-sm-5">
-                    <div class="title">
-                        <a href="#">white lumia 9001 </a>
-                    </div>
-                    <div class="brand">sony</div>
-                </div> 
-
-                <div class="col-xs-12 col-sm-3 no-margin">
-                    <div class="quantity">
-                        <div class="le-quantity">
-                            <form>
-                                <a class="minus" href="#reduce"></a>
-                                <input name="quantity" readonly="readonly" type="text" value="1" />
-                                <a class="plus" href="#add"></a>
-                            </form>
-                        </div>
-                    </div>
-                </div> 
                 
-                <div class="col-xs-12 col-sm-2 no-margin">
-                    <div class="price">
-                        $2000.00
-                    </div>
-                    <a class="close-btn" href="#"></a>
-                </div>
-            </div><!-- /.cart-item -->
-
-            <div class="row no-margin cart-item">
-                <div class="col-xs-12 col-sm-2 no-margin">
-                    <a href="#" class="thumb-holder">
-                        <img class="lazy" alt="" src="http://placehold.it/73x73" />
-                    </a>
-                </div>
-
-                <div class="col-xs-12 col-sm-5">
-                    <div class="title">
-                        <a href="#">white lumia 9001 </a>
-                    </div>
-                    <div class="brand">sony</div>
-                </div> 
-
-                <div class="col-xs-12 col-sm-3 no-margin">
-                    <div class="quantity">
-                        <div class="le-quantity">
-                            <form>
-                                <a class="minus" href="#reduce"></a>
-                                <input name="quantity" readonly="readonly" type="text" value="1" />
-                                <a class="plus" href="#add"></a>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-2 no-margin">
-                    <div class="price">
-                        $2000.00
-                    </div>
-                    <a class="close-btn" href="#"></a>
-                </div>
-            </div><!-- /.cart-item -->
         </div>
         <!-- ========================================= CONTENT : END ========================================= -->
 
@@ -164,8 +69,8 @@
                         </li>
                     </ul>
                     <div class="buttons-holder">
-                        <a class="le-button big" href="<?php echo BASE_URL;?>/index.php?page=checkout" >checkout</a>
-                        <a class="simple-link block" href="<?php echo BASE_URL;?>/index.php?page=home" >continue shopping</a>
+                        <a class="le-button big" href="#" >checkout</a>
+                        <a class="simple-link block" href="#" >continue shopping</a>
                     </div>
                 </div>
             </div><!-- /.widget -->
@@ -184,5 +89,6 @@
         </div><!-- /.sidebar -->
 
         <!-- ========================================= SIDEBAR : END ========================================= -->
-    </div>
-</section>
+    </div>  </div> 
+<!-- START @PAGE CONTENT -->
+@stop

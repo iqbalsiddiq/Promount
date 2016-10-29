@@ -17,17 +17,16 @@
                             <div class="body">
                                 <div class="label-discount clear"></div>
                                 <div class="title">
-                                    <a href="{{$item->url}}">{{$item->title}}</a>
+                                   <a href="/products?ID={{$item->id}}">{{$item->title}}</a>
                                 </div>
                                 <div class="brand">{{$item->detail}}</div>
                             </div>
-                            <div class="prices">
-
+                            <div class="prices"> 
                                 <div class="price-current text-right">{{$item->price}}</div>
                             </div>
                             <div class="hover-area">
                                 <div class="add-cart-button">
-                                    <a href="index.php?page=single-product" class="le-button">Add to cart</a>
+                                    <a href="/cart" class="le-button">Add to cart</a>
                                 </div>
                                 <div class="wish-compare">
                                     <a class="btn-add-to-wishlist" href="#">Add to Wishlist</a>
@@ -71,7 +70,7 @@
                     </div>
                     <div class="prices text-right">
                         <div class="price-current inline">$1199.00</div>
-                        <a href="cart.html" class="le-button big inline">add to cart</a>
+                        <a href="/cart" class="le-button big inline">add to cart</a>
                     </div>
                 </div><!-- /.product-item-holder -->
             </div><!-- /.col -->
