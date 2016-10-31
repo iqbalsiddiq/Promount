@@ -39,7 +39,6 @@
                                 </div>
                                 <div class="prices">
                                     <div class="price-prev">{{$item->price}}</div>
-                                    <div class="price-current">{{$item->price-($item->price*$item->discount/100)}}</div>
                                     <div class="price-current pull-right">{{$item->detail}}</div>
 
                                 </div>
@@ -66,7 +65,7 @@
                 </div>
                 <div class="tab-pane" id="new-arrivals">
                        <div class="product-grid-holder">
-                       <?php
+                        <?php
                                 $tabsFeatured =DB::table('item')->orderByRaw("RAND()")->where('newdeals', '1')->skip(0)->take(4)->get();
                                 foreach ($tabsFeatured as $item ):          
                                 ?>
@@ -93,7 +92,7 @@
                                 </div>
                                 <div class="prices">
                                     <div class="price-prev">{{$item->price}}</div>
-                                    <div class="price-current">{{$item->price-($item->price*$item->discount/100)}}</div>
+                        
                                     <div class="price-current pull-right">{{$item->detail}}</div>
                                 </div>
 
@@ -147,7 +146,7 @@
                                 </div>
                                 <div class="prices">
                                     <div class="price-prev">{{$item->price}}</div>
-                                    <div class="price-current">{{$item->price-($item->price*($item->discount/100))}}</div>
+                                   
                                     <div class="price-current pull-right">{{$item->detail}}</div>
                                 </div>
 

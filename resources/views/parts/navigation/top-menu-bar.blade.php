@@ -42,8 +42,8 @@
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Dollar (US)</a></li>
                     </ul>
                 </li>
-                <li><a href="{{url('page/signin')}}">Register</a></li>
-                <li><a href="{{url('page/signin')}}">Login</a></li>
+                <li><a href="{{url('/signin')}}">Register</a></li>
+                <li><a href="{{url('/signin')}}">Login</a></li>
             </ul>
         </div><!-- /.col -->
     </div><!-- /.container -->
