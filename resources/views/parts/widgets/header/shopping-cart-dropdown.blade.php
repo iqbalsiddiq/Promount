@@ -13,81 +13,71 @@
         
         <div class="basket">
             
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="/cart">
                 <div class="basket-item-count">
-                    <span class="count">3</span>
+                    <span class="count">
+                        <?php 
+                              $cart=array();
+
+                              if(!empty($_SESSION['cart'])){
+                                echo count($_SESSION['cart']);
+                                foreach($_SESSION['cart'] as $data){
+                                   array_push($cart, $data["id"]);    
+                                }                                 
+                              }else{
+                                $cart=[];
+                                 echo "0";
+                              }
+
+                        ?>
+                    </span>
                     <img src="{{$assetUrl}}assets/images/icon-cart.png" alt="" />
                 </div>
 
                 <div class="total-price-basket"> 
                     <span class="lbl">your cart:</span>
                     <span class="total-price">
-                        <span class="sign">$</span><span class="value">3219,00</span>
+                    <?php                        
+                        $items = DB::table('item')
+                                ->whereIn('id', $cart)->get();
+                        $sum=0;
+                        foreach ($items as $prices ):     
+                            $sum=$sum+$prices->price-($prices->price*$prices->discount/100);
+                        endforeach
+                    ?>
+                        <span class="sign">$</span><span class="value"><?php echo $sum; ?></span>
                     </span>
                 </div>
             </a>
 
             <ul class="dropdown-menu">
+            <?php foreach ($items as $item ):  ?>
                 <li>
                     <div class="basket-item">
                         <div class="row">
                             <div class="col-xs-4 col-sm-4 no-margin text-center">
-                                <div class="thumb">
-                                    <img alt="" src="{{$assetUrl}}assets/images/products/product-small-01.jpg" />
+                                <div class="thumb"> 
+                                    <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" /></a>
                                 </div>
                             </div>
                             <div class="col-xs-8 col-sm-8 no-margin">
-                                <div class="title">Blueberry</div>
-                                <div class="price">$270.00</div>
+                                <div class="title">{{$item->title}}</div>
+                                <div class="price">${{$item->price-($item->price*$item->discount/100)}}</div>
                             </div>
                         </div>
                         <a class="close-btn" href="#"></a>
                     </div>
                 </li>
-
-                <li>
-                    <div class="basket-item">
-                        <div class="row">
-                            <div class="col-xs-4 col-sm-4 no-margin text-center">
-                                <div class="thumb">
-                                    <img alt="" src="{{$assetUrl}}assets/images/products/product-small-01.jpg" />
-                                </div>
-                            </div>
-                            <div class="col-xs-8 col-sm-8 no-margin">
-                                <div class="title">Blueberry</div>
-                                <div class="price">$270.00</div>
-                            </div>
-                        </div>
-                        <a class="close-btn" href="#"></a>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="basket-item">
-                        <div class="row">
-                            <div class="col-xs-4 col-sm-4 no-margin text-center">
-                                <div class="thumb">
-                                    <img alt="" src="{{$assetUrl}}assets/images/products/product-small-01.jpg" />
-                                </div>
-                            </div>
-                            <div class="col-xs-8 col-sm-8 no-margin">
-                                <div class="title">Blueberry</div>
-                                <div class="price">$270.00</div>
-                            </div>
-                        </div>
-                        <a class="close-btn" href="#"></a>
-                    </div>
-                </li>
-
+            <?php endforeach ?>
 
                 <li class="checkout">
                     <div class="basket-item">
                         <div class="row">
                             <div class="col-xs-12 col-sm-6">
-                                <a href="index.php?page=cart" class="le-button inverse">View cart</a>
+                                <a href="/cart" class="le-button inverse">View cart</a>
                             </div>
                             <div class="col-xs-12 col-sm-6">
-                                <a href="index.php?page=checkout" class="le-button">Checkout</a>
+                                <a href="/checkout" class="le-button">Checkout</a>
                             </div>
                         </div>
                     </div>

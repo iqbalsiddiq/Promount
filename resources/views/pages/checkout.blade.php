@@ -1,5 +1,14 @@
-<!-- ========================================= CONTENT ========================================= -->
-
+ 
+@extends('layout.lay_home')
+@section('content') 
+<?php
+    $cart=array();
+    if(!empty($_SESSION['idcart'])){ 
+        $cart=$_SESSION['idcart'];
+    }else{
+        $cart=[]; 
+    }
+?>
 <section id="checkout-page">
     <div class="container">
         <div class="col-xs-12 no-margin">
@@ -78,51 +87,31 @@
 
             <section id="your-order">
                 <h2 class="border h1">your order</h2>
+                <?php                        
+                    $items = DB::table('item')
+                            ->whereIn('id', $cart)->get();
+                    $sum=0;
+                    foreach ($items as $prices ):     
+                        $sum=$sum+$prices->price-($prices->price*$prices->discount/100);
+                    endforeach
+                ?>
                 <form>
+                    <?php foreach ($items as $item ):  ?>
                     <div class="row no-margin order-item">
                         <div class="col-xs-12 col-sm-1 no-margin">
                             <a href="#" class="qty">1 x</a>
                         </div>
 
                         <div class="col-xs-12 col-sm-9 ">
-                            <div class="title"><a href="#">white lumia 9001 </a></div>
-                            <div class="brand">sony</div>
+                            <div class="title"><a href="/products?ID={{$item->id}}">{{$item->title}}</a></div>
+                            <div class="brand">{{$item->detail}}</div>
                         </div>
 
                         <div class="col-xs-12 col-sm-2 no-margin">
-                            <div class="price">$2000.00</div>
+                            <div class="price">${{$item->price-($item->price*$item->discount/100)}}</div>
                         </div>
                     </div><!-- /.order-item -->
-
-                    <div class="row no-margin order-item">
-                        <div class="col-xs-12 col-sm-1 no-margin">
-                            <a href="#" class="qty">1 x</a>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-9 ">
-                            <div class="title"><a href="#">white lumia 9001 </a></div>
-                            <div class="brand">sony</div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-2 no-margin">
-                            <div class="price">$2000.00</div>
-                        </div>
-                    </div><!-- /.order-item -->
-
-                    <div class="row no-margin order-item">
-                        <div class="col-xs-12 col-sm-1 no-margin">
-                            <a href="#" class="qty">1 x</a>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-9 ">
-                            <div class="title"><a href="#">white lumia 9001 </a></div>
-                            <div class="brand">sony</div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-2 no-margin">
-                            <div class="price">$2000.00</div>
-                        </div>
-                    </div><!-- /.order-item -->
+                     <?php endforeach ?>
                 </form>
             </section><!-- /#your-order -->
 
@@ -132,7 +121,7 @@
                         <ul class="tabled-data inverse-bold no-border">
                             <li>
                                 <label>cart subtotal</label>
-                                <div class="value ">$8434.00</div>
+                                <div class="value ">$<?php  echo  $sum ;?></div>
                             </li>
                             <li>
                                 <label>shipping</label>
@@ -148,7 +137,7 @@
                         <ul id="total-field" class="tabled-data inverse-bold ">
                             <li>
                                 <label>order total</label>
-                                <div class="value">$8434.00</div>
+                                <div class="value">$<?php  echo  $sum ;?></div>
                             </li>
                         </ul><!-- /.tabled-data -->
 
@@ -185,3 +174,4 @@
     </div><!-- /.container -->    
 </section><!-- /#checkout-page -->
 <!-- ========================================= CONTENT : END ========================================= -->
+@stop

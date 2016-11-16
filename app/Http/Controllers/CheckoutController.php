@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;    
 use View;
 
-class HomeController extends PromountController {
+class CheckoutController extends PromountController {
     /*
       |--------------------------------------------------------------------------
       | DashboardController
@@ -64,11 +65,28 @@ class HomeController extends PromountController {
         // pass variable to view
         View::share('css', $this->css);
         View::share('js', $this->js);
-        View::share('title', 'Promount: Deal and Discount for Everything');
-        
-        return view('pages/home');
+        View::share('title', 'Promount: Deal and Discount for Everything');  
+       //  var_dump($_SESSION['idcart']);
+        return view('pages/checkout');
     }
 
     
-
+    public function Pay($id){
+        
+        // if(empty($_SESSION['idcart'])){
+        //     $_SESSION['idcart']=array();
+        // }
+        // $s=count($_SESSION);
+        // if(!in_array($id, $_SESSION['idcart'])){
+        //     array_push($_SESSION['idcart'], $id);
+        // }
+        // var_dump($_SESSION['idcart']);
+        // $e=count($_SESSION);
+        // if($e>$s){
+        //     return Redirect::back()->with('message','Operation Successful !');
+        // }else{
+        //     echo "<script>alert('failed add cart');</script>";
+        //     return Redirect::back()->with('message','Operation Successful !'); 
+        // }
+    }
 }

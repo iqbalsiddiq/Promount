@@ -13,5 +13,9 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('/products', 'ProductController@index');
+Route::get('/find', 'FindController@index');
+Route::get('/category', 'CategoryController@index');
 Route::get('/cart', 'CartController@index');
+Route::get('/cart/addCart/{id}/{quantity}', 'CartController@addCart');
+Route::get('/checkout', 'CheckoutController@index');
 Route::get('/signin', 'AuthenticationController@index');
