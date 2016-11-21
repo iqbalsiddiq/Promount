@@ -27,7 +27,7 @@
                     </select>
                 <!-- </li> -->
             </ul>
-            <input type="submit" class="search-button" value="Find">  </input>
+            <a class="search-button" href="#" onclick="$(this).closest('form').submit()">  </a>
 
         </div>
     </form>

@@ -26,6 +26,7 @@
 @include('parts/section.best-sellers',array('topdeals'=>DB::table('item')->orderByRaw("RAND()")->where('topdeals', '1')->skip(0)->take(3)->get()))
 
 
+
 @include('parts/section.top-brands',array('merchant'=>DB::table('merchant')->skip(0)->take(6)->get()))
 
  
