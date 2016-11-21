@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;    
 use View;
 
 class CartController extends PromountController {
@@ -12,7 +13,7 @@ class CartController extends PromountController {
      */
 
     public function __construct() {
-        
+        session_start();
         parent::__construct();
 
         $this->setApp();
@@ -64,11 +65,96 @@ class CartController extends PromountController {
         // pass variable to view
         View::share('css', $this->css);
         View::share('js', $this->js);
-        View::share('title', 'Promount: Deal and Discount for Everything');
-        
+        View::share('title', 'Promount: Deal and Discount for Everything');  
+     //  var_dump($_SESSION['cart']);
+      //  session_destroy();
         return view('pages/cart');
+        
     }
 
     
+    public function addCart($id,$quantity){
+        $cart = array();    
+        $status=false;
+        if(empty($_SESSION['cart'])){            
+            $_SESSION['cart']=array();
+            $cart['id'] = $id; 
+            $cart['quantity'] = $quantity;
+            array_push($_SESSION['cart'], $cart);
+            $status=true;
+        }else{ 
+            $check=array();
 
+            foreach($_SESSION['cart'] as $product){
+                array_push($check,$product['id'] );
+            }
+            
+            if(in_array($id, $check)){ 
+                $i=0;
+                foreach($_SESSION['cart'] as $product){
+                     if($id==$product['id']){
+                        $_SESSION['cart'][$i]["quantity"]++;   
+                        $status=true;
+                     }
+                $i++;
+                }               
+            }else{
+                $cart['id'] = $id; 
+                $cart['quantity'] = $quantity;
+                array_push($_SESSION['cart'], $cart);
+                $status=true;
+               
+            }
+                 
+        }
+        // if(!in_array($id, $_SESSION['cart'])){
+        //     array_push($_SESSION['cart'], $cart);
+        // }
+      // var_dump($_SESSION['cart']);
+        // $tes=array();
+        // foreach($_SESSION['cart'] as $data){
+        //         array_push($tes, 1);    
+        // }
+         
+        
+        // var_dump($tes);
+       
+      //  session_destroy();
+        //echo $_SESSION['cart'][0]["id"];
+       // unset($_SESSION['cart'][0]);
+      //=== 
+        if($status){
+            return Redirect::back()->with('message','Operation Successful !');
+        }else{
+            echo "<script>alert('failed add cart');</script>";
+             return Redirect::back()->with('message','Operation Successful !');
+        }
+    }
+
+     public function minCart($id,$quantity){
+        $cart = array();    
+        $status=false;        
+        $check=array();
+
+        foreach($_SESSION['cart'] as $product){
+            array_push($check,$product['id'] );
+        }
+            
+        if(in_array($id, $check)){ 
+        $i=0;
+            foreach($_SESSION['cart'] as $product){
+                if($id==$product['id']){
+                    $_SESSION['cart'][$i]["quantity"]--;   
+                     $status=true;
+                }
+                $i++;
+            } 
+        }           
+        if($status){
+            return Redirect::back()->with('message','Operation Successful !');
+        }else{
+            echo "<script>alert('failed add cart');</script>";
+             return Redirect::back()->with('message','Operation Successful !');
+        }
+    }
 }

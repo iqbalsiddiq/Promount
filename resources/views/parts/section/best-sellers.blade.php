@@ -12,7 +12,8 @@
                     <div class="col-xs-12 col-sm-4 no-margin product-item-holder size-medium hover">
                         <div class="product-item">
                             <div class="image">
-                                <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" />
+                                <a href="/products?ID={{$item->id}}"> 
+                                <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" /></a>
                             </div>
                             <div class="body">
                                 <div class="label-discount clear"></div>
@@ -54,10 +55,9 @@
                     
                     <div class="gallery-thumbs clearfix">
                         <ul>
-
-                            <li><a class="horizontal-thumb active" data-target="#best-seller-single-product-slider" data-slide="0" href="#slide1"><img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/gallery-thumb-01.jpg" /></a></li>
-                            <li><a class="horizontal-thumb" data-target="#best-seller-single-product-slider" data-slide="1" href="#slide2"><img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/gallery-thumb-01.jpg" /></a></li>
-                            <li><a class="horizontal-thumb" data-target="#best-seller-single-product-slider" data-slide="2" href="#slide3"><img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/gallery-thumb-01.jpg" /></a></li>
+                        
+                            <li><a class="horizontal-thumb" data-target="#best-seller-single-product-slider" data-slide="0" href="#slide1"><img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/gallery-thumb-01.jpg" /></a></li>
+                            <li><a class="horizontal-thumb" data-target="#best-seller-single-product-slider" data-slide="1" href="#slide2"><img alt="" src="assets/images/blank.gif" data-echo="assets/images/products/gallery-thumb-01.jpg" /></a></li>    
                         </ul>
                     </div><!-- /.gallery-thumbs -->
 
@@ -69,8 +69,8 @@
                         <div class="brand"><?php echo $item->detail; ?></div>
                     </div>
                     <div class="prices text-right">
-                        <div class="price-current inline">$1199.00</div>
-                        <a href="/cart" class="le-button big inline">add to cart</a>
+                        <div class="price-current inline">$<?php echo $item->price-($item->price*$item->discount/100); ?></div>
+                        <a href="/cart/addCart/{{$item->id}}" class="le-button big inline">add to cart</a>
                     </div>
                 </div><!-- /.product-item-holder -->
             </div><!-- /.col -->

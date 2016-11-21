@@ -391,6 +391,20 @@
             unload: false
         });
     });
+    /*===================================================================================*/
+    /*  Search Category
+    /*===================================================================================*/
+    $("ul.categories-filter").on("click", ".init", function() {
+    $(this).closest("ul.categories-filter").children('li:not(.init)').toggle();
+        });
+
+        var allOptions = $("ul.categories-filter").children('li:not(.init)');
+        $("ul.categories-filter").on("click", "li:not(.init)", function() {
+            allOptions.removeClass('selected');
+            $(this).addClass('selected');
+            $("ul.categories-filter").children('.init').html($(this).html());
+            allOptions.toggle();
+        });
 
     /*===================================================================================*/
     /*  GMAP ACTIVATOR

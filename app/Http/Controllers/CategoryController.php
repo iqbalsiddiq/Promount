@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use View;
 
-class HomeController extends PromountController {
+class CategoryController extends PromountController {
     /*
       |--------------------------------------------------------------------------
       | DashboardController
@@ -66,7 +66,7 @@ class HomeController extends PromountController {
         View::share('js', $this->js);
         View::share('title', 'Promount: Deal and Discount for Everything');
         
-        return view('pages/home');
+        return view('pages/category');
     }
 
     

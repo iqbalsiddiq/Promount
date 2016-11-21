@@ -28,7 +28,8 @@
                                     }
                                 ?> 
                                 <div class="image">
-                                    <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" />
+                                     <a href="/products?ID={{$item->id}}"> 
+                                    <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" /></a>
                                 </div>
                                 <div class="body">
                                     <div class="label-discount green">{{$item->discount}}</div>
@@ -45,7 +46,7 @@
 
                                 <div class="hover-area">
                                     <div class="add-cart-button">
-                                        <a href="/cart" class="le-button">add to cart</a>
+                                        <a href="/cart/addCart/{{$item->id}}/1" class="le-button">add to cart</a>
                                     </div>
                                     <div class="wish-compare">
                                         <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
@@ -81,7 +82,8 @@
                                     }
                                 ?> 
                                 <div class="image">
-                                    <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" />
+                                    <a href="/products?ID={{$item->id}}"> 
+                                    <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" /></a>
                                 </div>
                                 <div class="body">
                                     <div class="label-discount green">{{$item->discount}}</div>
@@ -135,7 +137,8 @@
                                     }
                                 ?> 
                                 <div class="image">
-                                    <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" />
+                                    <a href="/products?ID={{$item->id}}"> 
+                                    <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" /></a>
                                 </div>
                                 <div class="body">
                                     <div class="label-discount green">{{$item->discount}}</div>

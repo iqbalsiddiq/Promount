@@ -15,7 +15,7 @@
                     
                     @foreach ($categorymenu as $item )
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">{{$item->title}}</a> 
+                        <a href="/category?idcategory={{$item->id}}" >{{$item->title}}</a> 
                     </li>
                     @endforeach        
                    

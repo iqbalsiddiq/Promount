@@ -12,7 +12,7 @@ class ProductController extends PromountController {
      */
 
     public function __construct() {
-        
+        session_start();
         parent::__construct();
 
         $this->setApp();
@@ -66,7 +66,7 @@ class ProductController extends PromountController {
         View::share('js', $this->js);
         View::share('title', 'Promount: Deal and Discount for Everything');
         
-        return view('pages/single-product');
+        return view('pages/blog-post');
     }
 
     

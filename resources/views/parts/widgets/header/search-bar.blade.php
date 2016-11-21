@@ -8,26 +8,26 @@
 </div><!-- /.contact-row -->
 <!-- ============================================================= SEARCH AREA ============================================================= -->
 <div class="search-area">
-    <form>
+    <form method="GET" action="find">
         <div class="control-group">
-            <input class="search-field" placeholder="Search for item" />
-
+            <input class="search-field" placeholder="Search for item" name="search" style="width:350px;" " />
             <ul class="categories-filter animate-dropdown">
-                <li class="dropdown">
-
-                    <a class="dropdown-toggle"  data-toggle="dropdown" href="index.php?page=category-grid">all categories</a>
-
-                    <ul class="dropdown-menu" role="menu" >
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category-grid">laptops</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category-grid">tv & audio</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category-grid">gadgets</a></li>
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="index.php?page=category-grid">cameras</a></li>
-
-                    </ul>
-                </li>
+                <!-- <li class="dropdown"> 
+                    <a class="dropdown-toggle"  data-toggle="dropdown" href="index.php?page=category-grid">all categories</a> 
+                 -->    <!-- <ul class="dropdown-menu" role="menu" > -->
+                    <select class="search-field" style="width: 150px;" name="idcategory">
+                    <?php
+                        $categorys =DB::table('category')->get();
+                        foreach ($categorys as $category ):          
+                    ?>
+                        <!-- <li role="presentation"><input name="idcategory" value="1" style="display: none;">dsada</li> -->
+                        <option value="{{$category->id}}" class="dropdown" >{{$category->title}}</option> 
+                    <?php endforeach ?> 
+                    <!-- </ul> -->
+                    </select>
+                <!-- </li> -->
             </ul>
-
-            <a class="search-button" href="#" ></a>    
+            <a class="search-button" href="#" onclick="$(this).closest('form').submit()">  </a>
 
         </div>
     </form>
