@@ -224,8 +224,7 @@
 <?php endforeach   ?> 
 
 <script type="text/javascript">
-    function AddCart($id) {
-        alert($id);
+    function AddCart($id) { 
         url="/cart/addCart/"+$id+"/1";
         window.location = url;
     }

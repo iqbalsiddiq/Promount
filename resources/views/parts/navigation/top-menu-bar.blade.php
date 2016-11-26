@@ -42,8 +42,17 @@
                         <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Dollar (US)</a></li>
                     </ul>
                 </li>
-                <li><a href="{{url('/signin')}}">Register</a></li>
-                <li><a href="{{url('/signin')}}">Login</a></li>
+                
+                <?php 
+                    if(!empty($_SESSION['name'])){
+                        echo '<li><a href="#">Welcome <b style="color:green;">'.$_SESSION['name'].'</b></a></li>';    
+                        echo '<li><a href="/signin/logout">Logout</a></li>';
+                    }else{
+                        echo '<li><a href="/signin">Register</a></li>';
+                        echo '<li><a href="/signin">Login</a></li>';
+                    }
+                ?>
+               
             </ul>
         </div><!-- /.col -->
     </div><!-- /.container -->

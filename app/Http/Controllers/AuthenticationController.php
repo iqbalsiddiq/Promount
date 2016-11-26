@@ -1,8 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;    
 use View;
+use App\User;
+use Validator;
+use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthenticationController extends PromountController {
     /*
@@ -12,7 +21,7 @@ class AuthenticationController extends PromountController {
      */
 
     public function __construct() {
-        
+        session_start();
         parent::__construct();
 
         $this->setApp();
@@ -69,6 +78,70 @@ class AuthenticationController extends PromountController {
         return view('pages/authentication');
     }
 
-    
+    public function signup($email,$pass){   
 
+        $user= User::create([
+            'name' =>'',
+            'email' => $email,
+            'password' => $pass,
+        ]);
+
+        $_SESSION['userid']=$user->id;
+        $_SESSION['useremail']=$email;
+     
+        if($user){
+            return Redirect::back()->with('message','Operation Successful !');
+        }
+    }
+     
+
+    public function signin($email,$pass){     
+
+        $users = DB::table('users')->where('email',$email)->where('password', $pass)->get();
+        $count = DB::table('users')->where('email',$email)->where('password', $pass)->count();
+
+        $email="";
+        $id="";
+        $name="";
+        foreach ($users as $user)
+        {
+            $email=$user->email;
+            $id=$user->id;
+            $name=$user->name;
+        } 
+        if ($count>0) { 
+            $_SESSION['email']=$email;
+            $_SESSION['id']=$id;
+            $_SESSION['name']=$name; 
+            if(!empty($_SESSION['name'])){
+                return redirect()->intended('/');
+            }            
+        }else{
+            //return "Aa";
+           //return Redirect::back()->with('error_code', 5);
+            return Redirect::back();
+        }
+        //      return redirect()->intended('/');
+        //     // return "<script>alert('Invalid Username or Password');</script>";
+        // }
+      
+     
+        // if($user){
+        //     return Redirect::back()->with('message','Operation Successful !');
+        // }else{
+            
+        // }
+    }
+
+    public function logout(){
+        session_destroy();
+        return redirect()->intended('/');;
+    }
+
+
+    public function test(){
+        session_destroy();
+        return  $_SESSION['name'];
+    }
+     
 }

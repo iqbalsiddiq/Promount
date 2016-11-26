@@ -19,3 +19,8 @@ Route::get('/cart', 'CartController@index');
 Route::get('/cart/addCart/{id}/{quantity}', 'CartController@addCart');
 Route::get('/checkout', 'CheckoutController@index');
 Route::get('/signin', 'AuthenticationController@index');
+Route::get('/signin/signup/{email}/{pass}', 'AuthenticationController@signup');
+Route::get('/signin/confirmemail/{email}', 'AuthenticationController@confirmemail');
+Route::get('/signin/signin/{email}/{pass}', 'AuthenticationController@signin');
+Route::get('/signin/logout', 'AuthenticationController@logout');
+Route::get('/signin/test', 'AuthenticationController@test');
