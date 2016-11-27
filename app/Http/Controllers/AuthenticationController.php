@@ -84,6 +84,7 @@ class AuthenticationController extends PromountController {
             'name' =>'',
             'email' => $email,
             'password' => $pass,
+            'usertype' =>'member',
         ]);
 
         $_SESSION['userid']=$user->id;
