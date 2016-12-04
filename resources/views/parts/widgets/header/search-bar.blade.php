@@ -19,10 +19,20 @@
                      <option value="0" class="dropdown" >All Categories</option> 
                     <?php
                         $categorys =DB::table('category')->get();
-                        foreach ($categorys as $category ):          
+                        $s=array();
+                        $i=0;
+                        foreach ($categorys as $category ): 
+                        $s[$i]="";
+                        if(array_key_exists('idcategory', $_GET)){        
+                            if($_GET['idcategory']==$category->id){
+                                $i++;
+                                $s[$i]="selected";
+                            }
+                        }
+
                     ?>
                         <!-- <li role="presentation"><input name="idcategory" value="1" style="display: none;">dsada</li> -->
-                        <option value="{{$category->id}}" class="dropdown" >{{$category->title}}</option> 
+                        <option value="{{$category->id}}" class="dropdown" {{$s[$i]}}>{{$category->title}}</option> 
                     <?php endforeach ?> 
                     <!-- </ul> -->
                     </select>

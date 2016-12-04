@@ -17,6 +17,8 @@ Route::get('/find', 'FindController@index');
 Route::get('/category', 'CategoryController@index');
 Route::get('/cart', 'CartController@index');
 Route::get('/cart/addCart/{id}/{quantity}', 'CartController@addCart');
+Route::get('/cart/minCart/{id}/{quantity}', 'CartController@minCart');
+Route::get('/cart/Delitem/{id}/{quantity}', 'CartController@Delitem');
 Route::get('/checkout', 'CheckoutController@index');
 Route::get('/signin', 'AuthenticationController@index');
 Route::get('/signin/signup/{email}/{pass}', 'AuthenticationController@signup');

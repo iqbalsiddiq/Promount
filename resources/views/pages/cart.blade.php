@@ -21,6 +21,7 @@
                 $items = DB::table('item')
                        ->whereIn('id', $ids)->get();
                 $sumPrice=0;
+                $c=count($_SESSION['cart'])-1;
                 foreach ($items as $prices) {
                      $sumPrice=$sumPrice+$prices->price-($prices->price*$prices->discount/100);                   
                 }
@@ -45,8 +46,8 @@
                     <div class="quantity">
                         <div class="le-quantity">
                             <form>
-                                <a class="minus" href="/cart/minCart/{{$item->id}}/1"></a>
-                                <input name="quantity" readonly="readonly" type="text" value=<?php echo $_SESSION['cart'][$i]["quantity"]; ?> />
+                                <a class="minus" href="#" onclick="MinCart({{$item->id}})"></a>
+                                <input name="quantity" readonly="readonly" type="text" value=<?php echo $_SESSION['cart'][$c]["quantity"]; ?> />
                                 <a class="plus" href="#" onclick="AddCart({{$item->id}})"></a>
                             </form>
                         </div>
@@ -60,7 +61,7 @@
                     <a class="close-btn" href="#"></a>
                 </div>
             </div><!-- /.cart-item -->
-            <?php $i++; endforeach ?>
+            <?php $i++;$c--; endforeach ?>
                 
         </div>
         <!-- ========================================= CONTENT : END ========================================= -->
@@ -114,6 +115,10 @@
     function AddCart($id) {
         alert($id);
         url="/cart/addCart/"+$id+"/1";
+        window.location = url;
+    }
+     function MinCart($id) { 
+        url="/cart/minCart/"+$id+"/1";
         window.location = url;
     }
 </script>

@@ -27,7 +27,7 @@
                             </div>
                             <div class="hover-area">
                                 <div class="add-cart-button">
-                                    <a href="/cart" class="le-button">Add to cart</a>
+                                    <a href="/cart/addCart/{{$item->id}}/1" class="le-button">Add to cart</a>
                                 </div>
                                 <div class="wish-compare">
                                     <a class="btn-add-to-wishlist" href="#">Add to Wishlist</a>

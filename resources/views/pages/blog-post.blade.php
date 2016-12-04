@@ -14,7 +14,18 @@
 	 ->select(DB::raw('item.description as description, item.detail as detail,item.title as title , item.timestamp as timestamp, category.title as category,item.image as image , item.price as price,item.discount as discount,item.id as id'))
 	 ->where('item.id', $id) 
 	 ->get();  	
-	 foreach ($products as $product ):   
+     $c=0;
+     $qwt=0;
+     if(!empty($_SESSION['cart'])){
+         foreach($_SESSION['cart'] as $product2){
+             if($_GET['ID']==$product2['id']){
+                    $qwt=$_SESSION['cart'][$c]["quantity"];  
+             } 
+         $c++;
+    	 }
+     }
+     foreach ($products as $product ):  
+                   
 ?>
 <div id="top-mega-nav">
     <div class="container">
@@ -110,8 +121,8 @@
         <div class="qnt-holder">
             <div class="le-quantity">
                <form>
-                    <a class="minus" href="/cart/minCart/{{$product->id}}/1"></a>
-                        <input name="quantity" readonly="readonly" type="text" value="1" />
+                    <a class="minus" href="#"  onclick="MinCart({{$product->id}})"></a>
+                          <input name="quantity" readonly="readonly" type="text" value=<?php echo $qwt; ?> />
                     <a class="plus" href="#" onclick="AddCart({{$product->id}})"></a>
                 </form>
             </div>
@@ -226,6 +237,12 @@
 <script type="text/javascript">
     function AddCart($id) { 
         url="/cart/addCart/"+$id+"/1";
+        window.location = url;
+    }
+
+    // /cart/minCart/{{$product->id}}/1
+    function MinCart($id) { 
+        url="/cart/minCart/"+$id+"/1";
         window.location = url;
     }
 </script>

@@ -65,7 +65,7 @@
                                 <div class="price">${{$item->price-($item->price*$item->discount/100)}}</div>
                             </div>
                         </div>
-                        <a class="close-btn" href="#"></a>
+                        <a class="close-btn" href="#" onclick="DelItem({{$item->id}})"></a>
                     </div>
                 </li>
             <?php endforeach ?>
@@ -88,3 +88,10 @@
     </div><!-- /.top-cart-holder -->
 </div><!-- /.top-cart-row-container -->
 <!-- ============================================================= SHOPPING CART DROPDOWN : END ============================================================= -->
+
+<script type="text/javascript">
+    function DelItem($id) { 
+        url="/cart/Delitem/"+$id+"/1";
+        window.location = url;
+    }
+</script>
