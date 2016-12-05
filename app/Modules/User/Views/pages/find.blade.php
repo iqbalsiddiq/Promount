@@ -1,7 +1,7 @@
 <?php
     $isListView = isset($_GET['view']) && ($_GET['view'] == 'list') ? true : false;
 ?>
-@extends('layout.lay_home')
+@extends('User::layout.lay_home')
 
 <!-- START @PAGE CONTENT -->
 @section('content')

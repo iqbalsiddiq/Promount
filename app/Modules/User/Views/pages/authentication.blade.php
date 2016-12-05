@@ -1,5 +1,5 @@
 <!-- ========================================= BREADCRUMB ========================================= -->
-@extends('layout.lay_home')
+@extends('User::layout.lay_home')
 
 <!-- START @PAGE CONTENT -->
 @section('content')
