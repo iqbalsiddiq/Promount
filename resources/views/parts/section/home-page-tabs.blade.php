@@ -100,7 +100,7 @@
 
                                 <div class="hover-area">
                                     <div class="add-cart-button">
-                                        <a href="/cart" class="le-button">add to cart</a>
+                                        <a href="/cart/addCart/{{$item->id}}/1" class="le-button">add to cart</a>
                                     </div>
                                     <div class="wish-compare">
                                         <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
@@ -155,7 +155,7 @@
 
                                 <div class="hover-area">
                                     <div class="add-cart-button">
-                                        <a href="/cart" class="le-button">add to cart</a>
+                                        <a href="/cart/addCart/{{$item->id}}/1" class="le-button">add to cart</a>
                                     </div>
                                     <div class="wish-compare">
                                         <a class="btn-add-to-wishlist" href="#">add to wishlist</a>

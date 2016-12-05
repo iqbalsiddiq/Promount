@@ -60,17 +60,16 @@
 								<button class="btn-block btn-lg btn btn-twitter"><i class="fa fa-twitter"></i> Sign In with Twitter</button>
 							</div>
 						</div>
-					</div>
-
-					<form role="form" class="login-form cf-style-1">
+					</div> 
+					<form role="form" class="login-form cf-style-1" action="#" >
 						<div class="field-row">
                             <label>Email</label>
-                            <input type="text" class="le-input">
+                            <input type="text" class="le-input" id="Emailsignin" >
                         </div><!-- /.field-row -->
 
                         <div class="field-row">
                             <label>Password</label>
-                            <input type="text" class="le-input">
+                            <input type="text" class="le-input" id="Passwordsignin" >
                         </div><!-- /.field-row -->
 
                         <div class="field-row clearfix">
@@ -83,7 +82,7 @@
                         </div>
 
                         <div class="buttons-holder">
-                            <button type="submit" class="le-button huge">Secure Sign In</button>
+                            <button  class="le-button huge" onclick="signin()" >Secure Sign In</button>
                         </div><!-- /.buttons-holder -->
 					</form><!-- /.cf-style-1 -->
 
@@ -95,14 +94,22 @@
 					<h2 class="bordered">Create New Account</h2>
 					<p>Create your own Media Center account</p>
 
-					<form role="form" class="register-form cf-style-1">
+					<form role="form"  class="register-form cf-style-1" action="#">
 						<div class="field-row">
                             <label>Email</label>
-                            <input type="text" class="le-input">
+                            <input type="email" class="le-input"  id="email1">
                         </div><!-- /.field-row -->
-
+                        <div class="field-row">
+                            <label>Password</label>
+                            <input type="Password" class="le-input" id="p1">
+                            <i id="cpass" style="display: none;color: red"></i>
+                        </div><!-- /.field-row -->
+                        <div class="field-row">
+                            <label>Confirm Password</label>
+                            <input type="Password" class="le-input" onchange="confirm()" id="p2">
+                        </div><!-- /.field-row -->
                         <div class="buttons-holder">
-                            <button type="submit" class="le-button huge">Sign Up</button>
+                            <button class="le-button huge" onclick="signup()">Sign Up</button>
                         </div><!-- /.buttons-holder -->
 					</form>
 
@@ -121,5 +128,33 @@
 		</div><!-- /.row -->
 	</div><!-- /.container -->
 </main><!-- /.authentication -->
+<script type="text/javascript">
+    function confirm() { 
+        var a= document.getElementById('p1').value;
+        var b= document.getElementById('p2').value;
+        if(a!=b){
+            document.getElementById('cpass').style.display="block";
+            document.getElementById('cpass').innerHTML="Password not valid";
+        }else{
+            document.getElementById('cpass').style.display="none";
+            document.getElementById('cpass').innerHTML="";
+        }
+    }
+
+    function signin(){
+        var email= document.getElementById('Emailsignin').value;
+        var pass= document.getElementById('Passwordsignin').value;
+        url="/signin/signin/"+email+"/"+pass;  
+        //alert(url);
+        window.location = url;
+    }
+    function signup(){
+        var email= document.getElementById('email1').value;
+        var pass= document.getElementById('p1').value;
+        url="/signin/signup/"+email+"/"+pass;
+        window.location = url;
+    }
+</script>
+
 <!-- ========================================= MAIN : END ========================================= -->
-@stop
+@stop 

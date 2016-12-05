@@ -26,7 +26,7 @@ class CartController extends PromountController {
      * @return Response
      */
     public function index() {
-
+        
         // theme styles
         $this->css['themes'] = [
         'assets/css/owl.carousel.css',
@@ -129,6 +129,7 @@ class CartController extends PromountController {
             echo "<script>alert('failed add cart');</script>";
              return Redirect::back()->with('message','Operation Successful !');
         }
+         
     }
 
      public function minCart($id,$quantity){
@@ -156,5 +157,31 @@ class CartController extends PromountController {
             echo "<script>alert('failed add cart');</script>";
              return Redirect::back()->with('message','Operation Successful !');
         }
+       //  var_dump($_SESSION['cart']);
+    }
+
+     public function Delitem($id,$quantity){
+        $cart = array();    
+        $status=false;        
+        $check=array();
+        foreach($_SESSION['cart'] as $product){
+            array_push($check,$product['id'] );
+        }    
+        if(in_array($id, $check)){ 
+        $i=0;          
+        foreach($_SESSION['cart'] as $product){
+                if($id==$product['id']){
+                   unset($_SESSION['cart'][$i]);   
+                    $status=true;
+                }
+                $i++;
+            } 
+        }           
+        if($status){
+            return Redirect::back()->with('message','Operation Successful !');
+        }else{
+            return Redirect::back()->with('message','Operation Successful !');
+        } 
+        
     }
 }

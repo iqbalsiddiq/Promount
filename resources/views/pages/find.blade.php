@@ -63,7 +63,27 @@
                      ->orWhere('item.discount', 'like', '%'.$search.'%') 
                      ->orWhere('item.timestamp', 'like', '%'.$search.'%') 
                      ->get();    
-                     foreach ($products as $product ):     
+                    
+                     foreach ($products as $product ):  
+                      if( $idcategory==0){
+                        ?>
+                        <li>
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 no-margin">
+                                <a href="#" class="thumb-holder">
+                                    <img alt="" src="assets/images/item/{{$product->image}}"   />
+                                </a>
+                            </div>
+                            <div class="col-xs-8 col-sm-8 no-margin">
+                                <a href="#">{{$product->title}}</a>
+                                <div class="price">
+                                    <div class="price-prev">${{$product->price}}</div>
+                                    <div class="price-current">${{$product->price-($product->price*$product->discount/100)}}</div>
+                                </div>
+                            </div>  
+                        </div>
+                       </li>
+                    <?php }else{   
                      if($product->idcategory==$idcategory && $product->topdeals==1 ){
                 ?>          
         <li>
@@ -82,7 +102,7 @@
                 </div>  
             </div>
         </li>
- <?php } endforeach   ?> 
+ <?php } }endforeach   ?> 
     </ul>
 </div><!-- /.widget -->
 
@@ -92,8 +112,8 @@
     <h1 class="border">Featured Products</h1>
     <ul class="product-list">
         <?php
-                    $search=$_GET['search']; 
-                    $idcategory=$_GET['idcategory']; 
+                   $search=$_GET['search']; 
+                   $idcategory=$_GET['idcategory']; 
                    $products = DB::table('category')
                      ->join('item', 'category.id', '=', 'item.idcategory')
                      ->select(DB::raw('item.description as description, item.detail as detail,item.title as title , item.timestamp as timestamp, category.title as category,category.id as idcategory,item.image as image,item.price as price,item.discount as discount,item.featured as featured'))
@@ -104,7 +124,27 @@
                      ->orWhere('item.discount', 'like', '%'.$search.'%') 
                      ->orWhere('item.timestamp', 'like', '%'.$search.'%') 
                      ->get();    
-                     foreach ($products as $product ):     
+                     foreach ($products as $product ):  
+                     if($idcategory==0){?>
+                     <li class="sidebar-product-list-item">
+            <div class="row">
+               <div class="col-xs-4 col-sm-4 no-margin">
+                    <a href="#" class="thumb-holder">
+                        <img alt="" src="assets/images/item/{{$product->image}}"   />
+                    </a>
+                </div>
+              <div class="col-xs-8 col-sm-8 no-margin">
+                    <a href="#">{{$product->title}}</a>
+                    <div class="price">
+                        <div class="price-prev">${{$product->price}}</div>
+                        <div class="price-current">${{$product->price-($product->price*$product->discount/100)}}</div>
+                    </div>
+                </div>  
+            </div>
+        </li><!-- /.sidebar-product-list-item -->
+        <?php
+
+                     }  else{ 
                      if($product->idcategory==$idcategory && $product->featured==1 ){
                 ?>          
         <li class="sidebar-product-list-item">
@@ -123,7 +163,7 @@
                 </div>  
             </div>
         </li><!-- /.sidebar-product-list-item -->
- <?php } endforeach   ?> 
+ <?php } }endforeach   ?> 
     </ul><!-- /.product-list -->
 </div><!-- /.widget -->
 <!-- ========================================= FEATURED PRODUCTS : END ========================================= -->
@@ -137,8 +177,7 @@
 
            <section id="recommended-products" class="carousel-holder hover small">
 
-    <div class="title-nav">
-        <h2 class="inverse">gaming</h2>
+    <div class="title-nav"> 
         <div class="nav-holder">
             <a href="#prev" data-target="#owl-recommended-products" class="slider-prev btn-prev fa fa-angle-left"></a>
             <a href="#next" data-target="#owl-recommended-products" class="slider-next btn-next fa fa-angle-right"></a>
@@ -150,7 +189,19 @@
             
             <section id="gaming">
     <div class="grid-list-products">
-        <h2 class="section-title">Gaming</h2>
+         <?php
+                    
+                    $categorys =DB::table('category')->where('id',$_GET['idcategory'])->get();
+                    $count =DB::table('category')->where('id',$_GET['idcategory'])->count();
+                    foreach ($categorys as $category ):    
+                        echo '<h2 class="section-title">'.$category->title.'</h2>'; 
+                    endforeach;
+                    if($count==0){
+                         echo '<h2 class="section-title">All Categories</h2>'; 
+                    }
+                // }   
+         ?>
+
         
         <div class="control-bar">
             <div id="popularity-sort" class="le-select" >
@@ -195,7 +246,44 @@
                              ->orWhere('item.discount', 'like', '%'.$search.'%') 
                              ->orWhere('item.timestamp', 'like', '%'.$search.'%') 
                              ->get();    
-                             foreach ($products as $product ):     
+                             foreach ($products as $product ):   
+                              if($idcategory==0){?>
+                             <div class="col-xs-12 col-sm-4 no-margin product-item-holder hover">
+                            <div class="product-item">
+                                <?php 
+                                    if ($product->sale=='1'){
+                                          echo '<div class="ribbon red"><span>sale</span></div>'; 
+                                    }
+                                    if ($product->new=='1'){
+                                          echo '<div class="ribbon blue"><span>new</span></div>'; 
+                                    }
+                                ?>  
+                                <div class="image">
+                                    <a href="/products?ID={{$product->id}}"><img alt="" src="assets/images/item/{{$product->image}}"   /></a>
+                                </div>
+                                <div class="body">
+                                    <div class="label-discount green">-{{$product->discount}}% Sale</div>
+                                    <div class="title">
+                                        <a href="/products?ID={{$product->id}}">{{$product->title}}</a>
+                                    </div>
+                                    <div class="brand">{{$product->detail}}</div>
+                                </div>
+                                <div class="prices">
+                                    <div class="price-prev">${{$product->price}}</div>
+                                    <div class="price-current pull-right">${{$product->price-($product->price*$product->discount/100)}}</div>
+                                </div>
+                                <div class="hover-area">
+                                    <div class="add-cart-button"> 
+                                        <a href="/products?ID={{$product->id}}" class="le-button">add to cart</a>
+                                    </div>
+                                    <div class="wish-compare">
+                                        <a class="btn-add-to-wishlist" href="#">add to wishlist</a>
+                                        <a class="btn-add-to-compare" href="#">compare</a>
+                                    </div>
+                                </div>
+                            </div><!-- /.product-item -->
+                        </div><!-- /.product-item-holder -->
+                        <?php }else{
                              if($product->idcategory==$idcategory){
                         ?>          
                         <div class="col-xs-12 col-sm-4 no-margin product-item-holder hover">
@@ -234,7 +322,7 @@
                             </div><!-- /.product-item -->
                         </div><!-- /.product-item-holder -->
 
-                     <?php } endforeach   ?> 
+                     <?php } }endforeach   ?> 
 
                     </div><!-- /.row -->
                 </div><!-- /.product-grid-holder -->

@@ -17,12 +17,14 @@
 			</div><!-- /.title-nav -->
 
 			<div id="<?php echo $carouselID;?>" class="owl-carousel product-grid-holder">
-			  @foreach ($recenly as $item )
+			  @foreach ($recently as $item )
 				<div class="no-margin carousel-item product-item-holder <?php echo $productItemSize;?> hover">
 					<div class="product-item">
 						<div class="ribbon red"><span>sale</span></div> 
 						<div class="image">
+						    <a href="/products?ID={{$item->id}}"> 
 							<img alt="" src="assets/images/blank.gif" data-echo="assets/images/item/{{$item->image}}" />
+							</a>
 						</div>
 						<div class="body">
 							<div class="title">
@@ -31,11 +33,11 @@
 							<div class="brand">{{$item->detail}}</div>
 						</div>
 						<div class="prices">
-							<div class="price-current text-right">${{$product->price-($product->price*$product->discount/100)}}</div>
+							<div class="price-current text-right">${{$item->price-($item->price*$item->discount/100)}}</div>
 						</div>
 						<div class="hover-area">
 							<div class="add-cart-button">
-								<a href="/cart" class="le-button">Add to Cart</a>
+								<a href="/cart/addCart/{{$item->id}}/1" class="le-button">Add to Cart</a>
 							</div>
 							<div class="wish-compare">
 								<a class="btn-add-to-wishlist" href="#">Add to Wishlist</a>

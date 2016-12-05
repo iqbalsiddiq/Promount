@@ -11,38 +11,34 @@
 	// foreach ($categorys as $$category ):   
 	$products = DB::table('category')
 	 ->join('item', 'category.id', '=', 'item.idcategory')
-	 ->select(DB::raw('item.description as description, item.detail as detail,item.title as title , item.timestamp as timestamp, category.title as category,item.image as image'))
+	 ->select(DB::raw('item.description as description, item.detail as detail,item.title as title , item.timestamp as timestamp, category.title as category,item.image as image , item.price as price,item.discount as discount,item.id as id'))
 	 ->where('item.id', $id) 
 	 ->get();  	
-	 foreach ($products as $product ):   
+     $c=0;
+     $qwt=0;
+     if(!empty($_SESSION['cart'])){
+         foreach($_SESSION['cart'] as $product2){
+             if($_GET['ID']==$product2['id']){
+                    $qwt=$_SESSION['cart'][$c]["quantity"];  
+             } 
+         $c++;
+    	 }
+     }
+     foreach ($products as $product ):  
+                   
 ?>
 <div id="top-mega-nav">
     <div class="container">
         <nav>
             <ul class="inline">
                 <li class="dropdown le-dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-list"></i> shop by department
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Computer Cases & Accessories</a></li>
-                        <li><a href="#">CPUs, Processors</a></li>
-                        <li><a href="#">Fans, Heatsinks &amp; Cooling</a></li>
-                        <li><a href="#">Graphics, Video Cards</a></li>
-                        <li><a href="#">Interface, Add-On Cards</a></li>
-                        <li><a href="#">Laptop Replacement Parts</a></li>
-                        <li><a href="#">Memory (RAM)</a></li>
-                        <li><a href="#">Motherboards</a></li>
-                        <li><a href="#">Motherboard &amp; CPU Combos</a></li>
-                        <li><a href="#">Motherboard Components</a></li>
-                    </ul>
+                    <a href="#" class="dropdown-toggle" >
+                        <i class="fa fa-list"></i> {{$product->category}}
+                    </a> 
                 </li>
 
                 <li class="breadcrumb-nav-holder"> 
-                    <ul>
-                        <li class="breadcrumb-item">
-                            <a href="index.php?page=home">Home</a>
-                        </li>
+                    <ul>  
                         <li class="breadcrumb-item current gray">
                             <a href="index.php?page=about">{{$product->title}}</a>
                         </li>
@@ -108,8 +104,8 @@
         <div class="star-holder inline"><div class="star" data-score="4"></div></div>
         <div class="availability"><label>Availability:</label><span class="available">  in stock</span></div>
 
-        <div class="title"><a href="#">VAIO fit laptop - windows 8 SVF14322CXW</a></div>
-        <div class="brand">sony</div>
+        <div class="title"><a href="#">{{$product->detail}}</a></div>
+        <div class="brand">{{$product->title}}</div>
 
         <div class="social-row">
             <span class="st_facebook_hcount"></span>
@@ -118,19 +114,19 @@
         </div>
         
         <div class="prices">
-            <div class="price-prev">$2199.00</div>
-            <div class="price-current">$1740.00</div>
+            <div class="price-prev">${{$product->price}}</div>
+            <div class="price-current">${{$product->price-($product->price*$product->discount/100)}}</div>
         </div>
 
         <div class="qnt-holder">
             <div class="le-quantity">
-                <form>
-                    <a class="minus" href="#reduce"></a>
-                    <input name="quantity" readonly="readonly" type="text" value="1" />
-                    <a class="plus" href="#add"></a>
+               <form>
+                    <a class="minus" href="#"  onclick="MinCart({{$product->id}})"></a>
+                          <input name="quantity" readonly="readonly" type="text" value=<?php echo $qwt; ?> />
+                    <a class="plus" href="#" onclick="AddCart({{$product->id}})"></a>
                 </form>
             </div>
-            <a id="addto-cart" href="cart.html.html" class="le-button">add to cart</a>
+            <a id="addto-cart" href="/cart/addCart/{{$product->id}}/1" class="le-button">add to cart</a>
         </div><!-- /.qnt-holder -->
 
 	</div>
@@ -139,28 +135,35 @@
 </div>
 	<!-- /.widget -->
     <div class="widget">
-	    <h4>About Blog</h4>
+	    <h4>About</h4>
 	    <div class="body">
-	        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt, erat in malesuada aliquam, est erat faucibus purus, eget viverra nulla sem vitae neque. Quisque id sodales libero. </p>
+	        <p>{{substr($product->description,0,200)}}</p>
 	    </div>
 	</div><!-- /.widget -->
     <div class="widget">
-	    <h4>Categories</h4>
-	    <div class="body">
-	        <ul class="le-links">
-	            <li><a href="#">Business</a></li>
-	            <li><a href="#">Company</a></li>
-	            <li><a href="#">Entertainment</a></li>
-	            <li><a href="#">Health</a></li>
-	            <li><a href="#">News</a></li>
-	            <li><a href="#">Stories</a></li>
-	            <li><a href="#">Travel</a></li>
-	        </ul><!-- /.le-links -->
+        <h4>Categories</h4>
+        <div class="body">
+            <ul class="le-links">
+       
+        <?php
+            $AllCategory = DB::table('category')
+                     ->join('item', 'category.id', '=', 'item.idcategory')
+                     ->select(DB::raw('count(item.id) as sum, category.title as titles'))
+                     ->groupBy('category.title')
+                     ->get();  
+            foreach ($AllCategory as $item ):          
+        ?>
+	            <li><a href="#">{{$item->titles    }}</a></li>
+	            
+	   <?php
+            endforeach
+       ?>
+            </ul><!-- /.le-links -->
 	    </div>
 	</div><!-- /.widget -->
     <div class="widget">
     <div class="simple-banner">
-        <a href="#"><img alt="" class="img-responsive" src="assets/images/banners/banner-simple.jpg"></a>
+        <a href="#"><img alt="" class="img-responsive" src="assets/images/item/{{$product->image}}"></a>
     </div>
 </div>
     <!-- ========================================= RECENT POST ========================================= -->
@@ -168,71 +171,29 @@
     <h4>Recent Posts</h4>
     <div class="body">
         <ul class="recent-post-list">
+            <?php
+            $items = DB::table('item')->orderBy('timestamp', 'desc')->skip(0)->take(4)->get();
+               foreach ($items as $item ):          
+            ?>
             <li class="sidebar-recent-post-item">
                 <div class="media">
-                    <a href="#" class="thumb-holder pull-left">
-                        <img alt="" src="assets/images/recent-posts/1.jpg">
+                    <a href="/products?ID={{$item->id}}" class="thumb-holder pull-left">
+                        <img alt="" src="assets/images/item/{{$item->image}}">
                     </a>
                     <div class="media-body">
-                        <h5><a href="#">Coffee Time in Office </a></h5>
-                        <div class="posted-date">July 12 2014</div>
+                        <h5><a href="/products?ID={{$item->id}}">{{$item->title}}</a></h5>
+                        <div class="posted-date">{{ date('F d, Y', strtotime($item->timestamp))}} </div>
                     </div>
                 </div>
             </li><!-- /.sidebar-recent-post-item -->
-
-            <li class="sidebar-recent-post-item">
-                <div class="media">
-                    <a href="#" class="thumb-holder pull-left">
-                        <img alt="" src="assets/images/recent-posts/2.jpg">
-                    </a>
-                    <div class="media-body">
-                        <h5><a href="#">Lets Meet The Whole Team of MediaCenter </a></h5>
-                        <div class="posted-date">July 10 2014</div>
-                    </div>
-                </div>
-            </li><!-- /.sidebar-recent-post-item -->
-
-            <li class="sidebar-recent-post-item">
-                <div class="media">
-                    <a href="#" class="thumb-holder pull-left">
-                        <img alt="" src="assets/images/recent-posts/3.jpg">
-                    </a>
-                    <div class="media-body">
-                        <h5><a href="#">The Best Wordpress Support 24/7 </a></h5>
-                        <div class="posted-date">July 06 2014</div>
-                    </div>
-                </div>
-            </li><!-- /.sidebar-recent-post-item -->
-
-            <li class="sidebar-recent-post-item">
-                <div class="media">
-                    <a href="#" class="thumb-holder pull-left">
-                        <img alt="" src="assets/images/recent-posts/4.jpg">
-                    </a>
-                    <div class="media-body">
-                        <h5><a href="#">Gallery Post with Supported Animation</a></h5>
-                        <div class="posted-date">July 04 2014</div>
-                    </div>
-                </div>
-            </li><!-- /.sidebar-recent-post-item -->
-
-            <li class="sidebar-recent-post-item">
-                <div class="media">
-                    <a href="#" class="thumb-holder pull-left">
-                        <img alt="" src="assets/images/recent-posts/5.jpg">
-                    </a>
-                    <div class="media-body">
-                        <h5><a href="#">Sweet memories in our Store </a></h5>
-                        <div class="posted-date">July 01 2014</div>
-                    </div>
-                </div>
-            </li><!-- /.sidebar-recent-post-item -->
-
+            <?php
+               endforeach
+            ?> 
         </ul><!-- /.recent-post-list -->
     </div><!-- /.body -->
 </div><!-- /.widget -->
 <!-- ========================================= RECENT POST : END ========================================= -->
-    <div class="widget">
+    <!-- <div class="widget">
     <h4>Popular Tags</h4>
     <div class="body">
         <div class="tagcloud">
@@ -260,10 +221,10 @@
             <a style="font-size: 13pt;" href="#">Clean</a> 
             <a style="font-size: 9pt;" href="#">Easy to use</a> 
             <a style="font-size: 20pt;" href="#">Buy it</a> 
-            <a style="font-size: 12pt;" href="#">Success</a>
-        </div><!-- /.tagcloud -->
-    </div><!-- /.body -->
-</div><!-- /.widget -->
+            <a style="font-size: 12pt;" href="#">Success</a> -->
+        <!-- </div>tagcloud -->
+    <!-- </div>/.body -->
+<!--</div> /.widget -->
 </aside><!-- /.sidebar .blog-sidebar -->        </div>
         <!-- ========================================= SIDEBAR : END ========================================= -->
 
@@ -272,4 +233,18 @@
     </div>
 </section>
 <?php endforeach   ?> 
+
+<script type="text/javascript">
+    function AddCart($id) { 
+        url="/cart/addCart/"+$id+"/1";
+        window.location = url;
+    }
+
+    // /cart/minCart/{{$product->id}}/1
+    function MinCart($id) { 
+        url="/cart/minCart/"+$id+"/1";
+        window.location = url;
+    }
+</script>
+
 @stop
