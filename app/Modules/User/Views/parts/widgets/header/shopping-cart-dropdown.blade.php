@@ -1,4 +1,4 @@
-<div class="top-cart-row-container">
+<div class="top-cart-row-container" id="top-cart-row-container">
     <div class="wishlist-compare-holder">
         <div class="wishlist ">
             <a href="#"><i class="fa fa-heart"></i> wishlist <span class="value">(21)</span> </a>
@@ -91,7 +91,22 @@
 
 <script type="text/javascript">
     function DelItem($id) { 
-        url="/cart/Delitem/"+$id+"/1";
-        window.location = url;
+        jQuery.ajax({
+           url: '/cart/Delitem/'+$id+'/1',
+           type: 'get',
+           dataType: 'html',
+           success:function(data)
+           {
+             $('#top-cart-row-container').load(document.URL +  ' #top-cart-row-container');
+         
+           } 
+        });
+
+         
+
     }
+
+
+
+
 </script>

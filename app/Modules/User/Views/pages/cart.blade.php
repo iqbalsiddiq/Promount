@@ -112,14 +112,52 @@
     </div>  </div> 
 <!-- START @PAGE CONTENT -->
 <script type="text/javascript">
-    function AddCart($id) {
-        alert($id);
-        url="/cart/addCart/"+$id+"/1";
-        window.location = url;
+    // function AddCart($id) {
+    //     alert($id);
+    //     url="/cart/addCart/"+$id+"/1";
+    //     window.location = url;
+    // }
+    //  function MinCart($id) { 
+    //     url="/cart/minCart/"+$id+"/1";
+    //     window.location = url;
+    // }
+
+
+
+    function AddCart($id) { 
+        jQuery.ajax({
+           url: '/cart/addCart/'+$id+'/1',
+           type: 'get',
+           dataType: 'html',
+           success:function(data)
+           {
+            // document.getElementById('top-cart-row-container').reload();
+           // document.getElementById('top-banner-and-menu').reload();
+
+           $('#top-cart-row-container').load(document.URL +  ' #top-cart-row-container');
+            $('#top-banner-and-menu').load(document.URL +  ' #top-banner-and-menu');
+           } 
+        });
+
+         
     }
-     function MinCart($id) { 
-        url="/cart/minCart/"+$id+"/1";
-        window.location = url;
+  
+    function MinCart($id) { 
+        jQuery.ajax({
+           url: '/cart/minCart/'+$id+'/1',
+           type: 'get',
+           dataType: 'html',
+           success:function(data)
+           {
+             // document.getElementById('top-cart-row-container').reload();
+             
+            // document.getElementById('top-banner-and-menu').reload();
+            $('#top-cart-row-container').load(document.URL +  ' #top-cart-row-container');
+             $('#top-banner-and-menu').load(document.URL +  ' #top-banner-and-menu');
+
+           } 
+        });
     }
+
 </script>
 @stop
