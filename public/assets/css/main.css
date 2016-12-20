@@ -835,7 +835,7 @@ header .top-search-holder .search-area .search-button {
   display: inline-block;
   text-align: center;
   padding: 15px 15px 13px 15px;
-  margin: -3px -3px 0 0;
+  margin: -2px -2px 0 0;
   border-radius: 0 5px 5px 0;
 }
 header .top-search-holder .search-area .search-button:hover {
