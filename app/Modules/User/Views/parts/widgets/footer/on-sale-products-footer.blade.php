@@ -16,7 +16,7 @@
 
                     <div class="col-xs-12 col-sm-3 no-margin">
                         <a href="#" class="thumb-holder">
-                            <img alt="" src="{{$assetUrl}}assets/images/item/{{$item->image}}" data-echo="{{$assetUrl}}assets/images/item/{{$item->image}}" />
+                            <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" />
                         </a>
                     </div>
                 </div>

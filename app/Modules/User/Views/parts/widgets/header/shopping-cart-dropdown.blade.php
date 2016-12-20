@@ -31,7 +31,7 @@
 
                         ?>
                     </span>
-                    <img src="{{$assetUrl}}assets/images/icon-cart.png" alt="" />
+                    <img src="assets/images/icon-cart.png" alt="" />
                 </div>
 
                 <div class="total-price-basket"> 
