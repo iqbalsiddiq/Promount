@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(array('module'=>'Admin','namespace' => 'App\Modules\User\Controllers'), function() {
+Route::group(array('module'=>'User','namespace' => 'App\Modules\User\Controllers'), function() {
     Route::get('/','HomeController@index');
 
 Route::get('/products', 'ProductController@index');
