@@ -2,6 +2,6 @@
 
 return [
         // path to asset url
-	'assetUrl' => '',
+	'assetUrl' => 'http://localhost:8000/assets/admin/',
 
 ];

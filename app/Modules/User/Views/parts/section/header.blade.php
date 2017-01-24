@@ -4,7 +4,7 @@
 		
 		<div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
 			<!-- <div include('parts/widgets/header.logo') </div> -->
-			<a href="/"><img src="{{$assetUrl}}assets/images/logo.jpeg" style="width: 600px;height: 100px"></a>
+			<a href="/"><img src="assets/images/logo.jpeg" style="width: 600px;height: 100px"></a>
 		</div><!-- /.logo-holder -->
 
 		<div class="col-xs-12 col-sm-12 col-md-6 top-search-holder no-margin">
