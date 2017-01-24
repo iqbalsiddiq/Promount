@@ -15,7 +15,7 @@
 	   	 <!-- START @GLOBAL MANDATORY STYLES -->
 	@if(!empty($css['globals']))
 		@foreach($css['globals'] as $global)
-			<link href="{{$global}}" rel="stylesheet">
+			<link href="{{$assetUrl.$global}}" rel="stylesheet">
 		@endforeach
 	@endif
         <!--/ END GLOBAL MANDATORY STYLES -->
@@ -23,7 +23,7 @@
         <!-- START @PAGE LEVEL STYLES -->
         @if(!empty($css['pages']))
 		@foreach($css['pages'] as $page)
-			<link href="{{$page}}" rel="stylesheet">
+			<link href="{{$assetUrl.$page}}" rel="stylesheet">
 		@endforeach
 	@endif
         <!--/ END PAGE LEVEL STYLES -->
@@ -32,9 +32,9 @@
 	@if(!empty($css['themes']))
 		@foreach($css['themes'] as $key=>$theme)
 			@if(is_array($theme))
-				<link href="{{$key}}" rel="stylesheet" id="{{$theme['id']}}">
+				<link href="{{$assetUrl.$key}}" rel="stylesheet" id="{{$theme['id']}}">
 			@else
-				<link href="{{$theme}}" rel="stylesheet">
+				<link href="{{$assetUrl.$theme}}" rel="stylesheet">
 			@endif
 			
 		@endforeach
@@ -66,7 +66,7 @@
         <!-- START @CORE PLUGINS -->
 	@if(!empty($js['cores']))
 		@foreach($js['cores'] as $core)
-			<script src="{{$core}}"></script>
+			<script src="{{$assetUrl.$core}}"></script>
 		@endforeach
 	@endif
         <!--/ END CORE PLUGINS -->
@@ -81,7 +81,7 @@
 
         @if(!empty($js['plugins']))
 		@foreach($js['plugins'] as $plugin)
-			<script src="{{$plugin}}"></script>
+			<script src="{{$assetUrl.$plugin}}"></script>
 		@endforeach
 	@endif
         <!--/ END PAGE LEVEL PLUGINS -->
@@ -89,7 +89,7 @@
         <!-- START @PAGE LEVEL SCRIPTS -->
         @if(!empty($js['scripts']))
 		@foreach($js['scripts'] as $script)
-			<script src="{{$script}}"></script>
+			<script src="{{$assetUrl.$script}}"></script>
 		@endforeach
 	@endif
 

@@ -11,30 +11,16 @@
     <form method="GET" action="find">
         <div class="control-group">
             <input class="search-field" placeholder="Search for item" name="search" style="width:350px;" id="search" />
-            <ul class="animate-dropdown" style="
-    display: inline-block; 
-     border-top: 1px solid #e0e0e0;
-    border-left: none;
-    padding-top: 3px;
-    padding-bottom: -10px;
-      line-height: 44px;
-  padding-left: 7px;
-  display: inline-block;
-  border-left: 1px solid #e0e0e0;
-  text-transform: capitalize;
-
-  left: -8px;
-}
-    appearance: none;">
-                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" name="idcategory" id="idcategory" >Choose Category..</a>
-                  <ul class="dropdown-menu" role="menu" >
-                  <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:find(0,'All categories');">All categories</a></li>  
-                  <?php
+            <ul class="categories-filter animate-dropdown">
+                <!-- <li class="dropdown"> 
+                    <a class="dropdown-toggle"  data-toggle="dropdown" href="index.php?page=category-grid">all categories</a> 
+                 -->    <!-- <ul class="dropdown-menu" role="menu" > -->
+                    <select class="form-control" style=" -moz-appearance: none;width: 170px; overflow: hidden;   appearance: none;" name="idcategory" onchange="find()" id="idcategory">
+                     <option value="0" class="dropdown" >All Categories</option> 
+                    <?php
                         $categorys =DB::table('category')->get();
                         $s=array();
                         $i=0;
-
                         foreach ($categorys as $category ): 
                         $s[$i]="";
                         if(array_key_exists('idcategory', $_GET)){        
@@ -45,66 +31,25 @@
                         }
 
                     ?>
-
-
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:find(<?php echo $category->id?>,'<?php echo $category->title?>');">{{$category->title}}</a></li>
-                   <?php endforeach ?> 
-
-                    </ul>
-                    </li>
-
-             
+                        <!-- <li role="presentation"><input name="idcategory" value="1" style="display: none;">dsada</li> -->
+                        <option value="{{$category->id}}" class="dropdown" {{$s[$i]}}>{{$category->title}}</option> 
+                    <?php endforeach ?> 
+                    <!-- </ul> -->
+                    </select>
+                <!-- </li> -->
             </ul>
-            <a class="search-button" onclick="searchUrl()">  </a>
+            <a class="search-button" href="#" onclick="$(this).closest('form').submit()">  </a>
 
         </div>
     </form>
 </div><!-- /.search-area -->
 <!-- ============================================================= SEARCH AREA : END ============================================================= -->
  
-<!-- get category from db -->
- <?php 
- $categorys =DB::table('category')->get();
- $title="";
- foreach ($categorys as $category) {
-   $title=$title .  $category->title . ",";
- }
-   
-?>
-
 <script type="text/javascript">
-
-getSelectedCategory();
-
-function searchUrl(){
-    var search= document.getElementById('search').value;
-    var idcategory=window.location.href.split("idcategory=");
-    var url ='find?search='+search+'&idcategory='+idcategory[1];
-    window.location=url;
-}
-
-function getSelectedCategory(){
-    var idcategory=window.location.href.split("idcategory=");
-
-    if(idcategory.length>1){
-    if (idcategory[1]==0){
-        document.getElementById('idcategory').innerHTML="All Categories";
-    }else{
-    var categorys="<?php echo $title; ?>";
-    var category=categorys.split(",");
-    document.getElementById('idcategory').innerHTML= category[parseInt(idcategory[1])-1];
-    }
-}
-}
-
-
-    function find(idcategory,title) {
+    function find() {
         var search= document.getElementById('search').value;
-        
-        // var idcategory= document.getElementById('idcategory').value;
-
+        var idcategory= document.getElementById('idcategory').value;
         var url ='find?search='+search+'&idcategory='+idcategory;
         window.location = url;
-        document.getElementById('idcategory').innerHTML=title;
     }
 </script>
