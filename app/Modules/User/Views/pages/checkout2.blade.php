@@ -1,4 +1,3 @@
-
 @extends('User::layout.lay_home')
 
 @section('content') 
@@ -6,7 +5,10 @@
 
 	<div class="inner-xs">
 		<div class="page-header">
-			<h2 class="page-title">Track your Order</h2>
+			<h2 class="page-title">Thank you</h2>
+			<h2 class="page-title">your Order ID</h2>
+			<h2 class="page-title" style="background-color: grey;"><i><?php echo $_GET['id'];?></i></h2>
+
 		</div>
 	</div>
 	        
@@ -22,14 +24,14 @@
 					<div class="field-row row form-row form-row-first">
 						<div class="col-xs-12">
 							<label for="orderid">Order ID</label> 
-							<input type="text" placeholder="Found in your order confirmation email." id="orderid" name="orderid" class="le-input input-text">
+							<input type="text" placeholder="	" id="orderid" name="orderid" class="le-input input-text">
 						</div>
 					</div>
 
 					<div class="field-row row form-row form-row-last">
 						<div class="col-xs-12">
 							<label for="order_email">Billing Email</label> 
-							<input type="text" placeholder="Email you used during checkout." id="order_email" name="order_email" class="le-input input-text">
+							<input type="text" placeholder="" id="order_email" name="order_email" class="le-input input-text">
 						</div>
 					</div>
 
@@ -41,4 +43,4 @@
 		</div>
 	</div>
 </div>
-@stop
+<@stop>

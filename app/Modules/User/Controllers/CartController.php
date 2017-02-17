@@ -2,7 +2,9 @@
 
 namespace App\Modules\User\Controllers;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Session;    
+use Illuminate\Support\Facades\Session;   
+use Illuminate\Support\Facades\DB;
+
 use View;
 
 class CartController extends PromountController {
@@ -27,7 +29,7 @@ class CartController extends PromountController {
      */
     public function index() {
         
-        // theme styles
+       // theme styles
         $this->css['themes'] = [
         'assets/css/owl.carousel.css',
         'assets/css/owl.transitions.css',
@@ -65,21 +67,44 @@ class CartController extends PromountController {
         // pass variable to view
         View::share('css', $this->css);
         View::share('js', $this->js);
-        View::share('title', 'Promount: Deal and Discount for Everything');  
-     //  var_dump($_SESSION['cart']);
-      //  session_destroy();
+        View::share('title', 'Promount: Deal and Discount for Everything');
+        // echo dump($_SESSION['cart']);
+        // 
+        // session_destroy();
         return view('User::pages/cart');
-        
+        // unset($_SESSION['cart'][0]);
+        // echo substr(str_shuffle(str_repeat($x='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(10/strlen($x)) )),1,10);
     }
 
     
-    public function addCart($id,$quantity){
+    public function addCart($id,$quantity){ 
         $cart = array();    
         $status=false;
         if(empty($_SESSION['cart'])){            
             $_SESSION['cart']=array();
+            $title="";
+            $discount="";
+            $price="";
+            $detail="";
+            $image="";
+            $items = DB::table('item')
+                       ->where('id', $id)->get();
+            foreach ($items as $item) {
+                $title=$item->title;
+                $discount=$item->discount;
+                $price=$item->price;
+                $detail=$item->detail;
+                $image=$item->image;   
+            }
+
             $cart['id'] = $id; 
             $cart['quantity'] = $quantity;
+            $cart['title'] = $title; 
+            $cart['discount'] = $discount;
+            $cart['price'] = $price; 
+            $cart['detail'] = $detail;
+            $cart['image'] = $image;
+            
             array_push($_SESSION['cart'], $cart);
             $status=true;
         }else{ 
@@ -90,17 +115,40 @@ class CartController extends PromountController {
             }
             
             if(in_array($id, $check)){ 
-                $i=0;
+                $x=0;
                 foreach($_SESSION['cart'] as $product){
                      if($id==$product['id']){
-                        $_SESSION['cart'][$i]["quantity"]++;   
+                        echo $_SESSION['cart'][$x]['id'];
+                        $_SESSION['cart'][$x]["quantity"]++;
                         $status=true;
+                        break;
                      }
-                $i++;
+                $x++;
                 }               
             }else{
+                $title="";
+                $discount="";
+                $price="";
+                $detail="";
+                $image="";
+                $items = DB::table('item')
+                           ->where('id', $id)->get();
+                foreach ($items as $item) {
+                    $title=$item->title;
+                    $discount=$item->discount;
+                    $price=$item->price;
+                    $detail=$item->detail;
+                    $image=$item->image;   
+                }
+
                 $cart['id'] = $id; 
                 $cart['quantity'] = $quantity;
+                $cart['title'] = $title; 
+                $cart['discount'] = $discount;
+                $cart['price'] = $price; 
+                $cart['detail'] = $detail;
+                $cart['image'] = $image;
+
                 array_push($_SESSION['cart'], $cart);
                 $status=true;
                
@@ -129,6 +177,7 @@ class CartController extends PromountController {
             echo "<script>alert('failed add cart');</script>";
              return Redirect::back()->with('message','Operation Successful !');
         }
+       
          
     }
 
@@ -145,7 +194,12 @@ class CartController extends PromountController {
         $i=0;
             foreach($_SESSION['cart'] as $product){
                 if($id==$product['id']){
-                    $_SESSION['cart'][$i]["quantity"]--;   
+                    $_SESSION['cart'][$i]["quantity"]--; 
+                    if($_SESSION['cart'][$i]["quantity"]==0){
+                        unset($_SESSION['cart'][$i]);
+                        $temp=array_values($_SESSION['cart']);
+                        $_SESSION['cart']=$temp;
+                    }  
                      $status=true;
                 }
                 $i++;

@@ -1,4 +1,5 @@
-@extends('layout.lay_home')
+@extends('User::layout.lay_home')
+
 @section('content') 
 <div id="top-banner-and-menu">
     <div class="container">
@@ -6,6 +7,7 @@
         <!-- ========================================= CONTENT ========================================= -->
         <div class="col-xs-12 col-md-9 items-holder no-margin">
             <?php          
+               $tot=0;
                 $ids=array();
                 if(!empty($_SESSION['cart'])){
                      
@@ -15,48 +17,49 @@
                     }
                 }else{
                     $ids=[];
-                    echo "0";
+                    
                 }
                // echo $cart;
-                $items = DB::table('item')
-                       ->whereIn('id', $ids)->get();
+                // $items = DB::table('item')
+                       // ->whereIn('id', $ids)->get();
                 $sumPrice=0;
                 $c=count($_SESSION['cart'])-1;
-                foreach ($items as $prices) {
-                     $sumPrice=$sumPrice+$prices->price-($prices->price*$prices->discount/100);                   
-                }
+             // /   foreach ($_SESSION['cart'] as $prices) {
+             //         $sumPrice=$sumPrice+$prices->price-($prices->price*$prices->discount/100);                   
+             //    }
                 $i=0;
-                foreach ($items as $item ):     
+                foreach ($_SESSION['cart'] as $item ):     
             ?>
             <div class="row no-margin cart-item">
                 <div class="col-xs-12 col-sm-2 no-margin">
-                    <a href="/products?ID={{$item->id}}"> 
-                        <img alt="" src="assets/images/item/{{$item->image}}" data-echo="assets/images/item/{{$item->image}}" />
+                    <a href="/products?ID={{$item['id']}}"> 
+                        <img alt="" src="assets/images/item/{{$item['image']}}" data-echo="assets/images/item/{{$item['image']}}" />
                     </a>
                 </div>
-
                 <div class="col-xs-12 col-sm-5 ">
                     <div class="title">
-                        <a href="/products?ID={{$item->id}}">{{$item->image}}</a>
+                        <a href="/products?ID={{$item['id']}}">{{$item['title']}}</a>
                     </div>
-                    <div class="brand">{{$item->detail}}</div>
+                    <div class="brand">{{$item['price']}}</div>
                 </div> 
-
                 <div class="col-xs-12 col-sm-3 no-margin">
                     <div class="quantity">
                         <div class="le-quantity">
                             <form>
-                                <a class="minus" href="#" onclick="MinCart({{$item->id}})"></a>
-                                <input name="quantity" readonly="readonly" type="text" value=<?php echo $_SESSION['cart'][$c]["quantity"]; ?> />
-                                <a class="plus" href="#" onclick="AddCart({{$item->id}})"></a>
+                                <a class="minus" href="#" onclick="MinCart({{$_SESSION['cart'][$i]['id']}})"></a>
+                                <input name="quantity" readonly="readonly" type="text" value=<?php echo $_SESSION['cart'][$i]["quantity"]; ?> />
+                                <a class="plus" href="#" onclick="AddCart({{$_SESSION['cart'][$i]['id']}})"></a>
                             </form>
                         </div>
                     </div>
                 </div> 
 
                 <div class="col-xs-12 col-sm-2 no-margin">
-                    <div class="price" id=<?php echo "price".$i; ?>>
-                        ${{($item->price-($item->price*$item->discount/100))*$_SESSION['cart'][$i]["quantity"]}}
+                    <div class="price" id=<?php echo "price".$i; ?>><?php                         
+                        $tot=$tot+($item['price']-($item['price']*$item['discount']/100))*$_SESSION['cart'][$i]['quantity'];
+                        echo ""; 
+                    ?>
+                        ${{($item['price']-($item['price']*$item['discount']/100))*$_SESSION['cart'][$i]["quantity"]}}
                     </div>
                     <a class="close-btn" href="#"></a>
                 </div>
@@ -75,7 +78,7 @@
                     <ul class="tabled-data no-border inverse-bold">
                         <li>
                             <label>cart subtotal</label>
-                            <div class="value pull-right">$<?php echo $sumPrice; ?></div>
+                            <div class="value pull-right"><i id="cartsubtotal"><?php echo $tot;?></i></div>
                         </li>
                         <li>
                             <label>shipping</label>
@@ -85,7 +88,7 @@
                     <ul id="total-price" class="tabled-data inverse-bold no-border">
                         <li>
                             <label>order total</label>
-                            <div class="value pull-right">$<?php echo $sumPrice; ?></div>
+                            <div class="value pull-right"><i id="ordertotal"><?php echo $tot;?></i></div>
                         </li>
                     </ul>
                     <div class="buttons-holder">
@@ -112,52 +115,14 @@
     </div>  </div> 
 <!-- START @PAGE CONTENT -->
 <script type="text/javascript">
-    // function AddCart($id) {
-    //     alert($id);
-    //     url="/cart/addCart/"+$id+"/1";
-    //     window.location = url;
-    // }
-    //  function MinCart($id) { 
-    //     url="/cart/minCart/"+$id+"/1";
-    //     window.location = url;
-    // }
-
-
-
-    function AddCart($id) { 
-        jQuery.ajax({
-           url: '/cart/addCart/'+$id+'/1',
-           type: 'get',
-           dataType: 'html',
-           success:function(data)
-           {
-            // document.getElementById('top-cart-row-container').reload();
-           // document.getElementById('top-banner-and-menu').reload();
-
-           $('#top-cart-row-container').load(document.URL +  ' #top-cart-row-container');
-            $('#top-banner-and-menu').load(document.URL +  ' #top-banner-and-menu');
-           } 
-        });
-
-         
+    function AddCart($id) {
+        // alert($id);
+        url="/cart/addCart/"+$id+"/1";
+        window.location = url;
     }
-  
-    function MinCart($id) { 
-        jQuery.ajax({
-           url: '/cart/minCart/'+$id+'/1',
-           type: 'get',
-           dataType: 'html',
-           success:function(data)
-           {
-             // document.getElementById('top-cart-row-container').reload();
-             
-            // document.getElementById('top-banner-and-menu').reload();
-            $('#top-cart-row-container').load(document.URL +  ' #top-cart-row-container');
-             $('#top-banner-and-menu').load(document.URL +  ' #top-banner-and-menu');
-
-           } 
-        });
+     function MinCart($id) { 
+        url="/cart/minCart/"+$id+"/1";
+        window.location = url;
     }
-
 </script>
 @stop

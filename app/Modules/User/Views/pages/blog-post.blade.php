@@ -86,11 +86,109 @@
 					<p class="highlight">{{$product->detail}}</p>
 					<p>{{$product->description}}</p>
 					 
-				</div><!-- /.post-content -->
+                      <section id="comments" class="inner-bottom-xs">
+    <h3> 
+    <?php 
+        $iditem=$_GET['ID'];
+        $count=0; 
+        $reviews = DB::table('review')->where('iditem',$iditem)->get();    
+        foreach ($reviews as $review ){
+            $count++;
+        }    
+        echo $count;             
+    ?>          
+    Reviews
+
+    </h3>
+    <?php 
+        $iditem=$_GET['ID'];
+        $count=0; 
+        $dt="";
+        $reviews = DB::table('review')->orderBy('timestamp', 'desc')->skip(0)->take(20)->get();
+
+        // ->where('iditem',$iditem)->get();    
+        foreach ($reviews as $review ){            
+        $dt=$review->timestamp;  
+        // ->format('Y-m-d H:i:s');
+    ?>      
+    <div class="comment-item">
+        <div class="row no-margin">
+            <div class="col-lg-1 col-xs-12 col-sm-2 no-margin">
+                <div class="avatar">
+                    <img src="assets/images/default-avatar.jpg" alt="avatar">
+                </div>
+            </div>
+            <div class="col-xs-12 col-lg-11 col-sm-10 no-margin-right">
+                <div class="comment-body">
+                    <div class="meta-info">
+                        <header class="row no-margin">
+                            <div class="pull-left">
+                                <h4 class="author"><a href="#">{{$review->name}}</a></h4>
+                                <span class="date">- {{$dt}}</span>
+                                <div class="star-holder inline"><div class="star" data-score="{{$review->rating}}"></div></div>
+
+                              <!--   <span class="likes"><a href="#"><span class="likes-count">22</span><i class="icon fa fa-thumbs-up"></i></a></span>
+                                <span class="dislikes"><a href="#"><i class="icon fa fa-thumbs-down"></i></a></span>
+                            --> </div>
+                            <!-- <div class="pull-right">
+                                <a class="comment-reply" href="#">Reply</a>
+                            </div> -->
+                        </header>
+                    </div>
+                    <p class="comment-content">{{$review->review}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php 
+        }
+    ?>
+</section>
+ 
+  <section id="reply-block" class="leave-reply">
+    <h3>Leave a Reply</h3>
+    <p>Your email address cannot be published. Required fields are marked <abbr class="required">*</abbr> </p>
+
+    <form role="form" class="reply-form cf-style-1">
+        <div class="row field-row">
+            <div class="col-xs-12 col-sm-6">
+                <label>Full name*</label>
+                <input class="le-input" id="name">
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <label>Email*</label>
+                <input class="le-input" id="email">
+            </div>
+        </div>
+
+<form role="form" class="reply-form cf-style-1">
+        <div class="row field-row">
+            <div class="col-xs-12 col-sm-6">
+                <label>Give Rating*</label>
+                <div class="star-holder inline" id="star"><div class="star" id="star_review" data-score="5"></div></div>
+
+            </div>
+        </div>
+
+        <div class="row field-row">
+            <div class="col-xs-12">
+                <label>Leave a review*</label>
+                <textarea rows="10" id="review" class="form-control le-input"></textarea>
+            </div>
+        </div>
+    </form>
+     <button class="le-button big post-comment-button" href="#"  onclick="Store({{$id}})">Post review</button>
+</section>  
+
+
+ 				</div><!-- /.post-content -->
+
 	 		</div><!-- /.post-entry -->
 
 	 	 
 		</div><!-- /.posts -->
+
+
 
 		<!-- ========================================= CONTENT :END ========================================= -->
 			
@@ -101,7 +199,17 @@
     <div class=" no-margin sidebar page-main-content">
             <div id="single-product" class="row" >
                 <div class="no-margin body-holder">
-        <div class="star-holder inline"><div class="star" data-score="4"></div></div>
+        <?php 
+        $iditem=$_GET['ID'];
+        $ar=0;
+        $avgrating= DB::select("SELECT round(sum(rating)/count(1)) as avg FROM review where iditem='".$iditem."';");
+        foreach ($avgrating as $avg) {
+           $ar=$avg->avg;  
+        }
+                
+        ?>    
+        <div class="star-holder inline"><div class="star" id="ss" data-score="{{$ar}}"></div></div>
+    
         <div class="availability"><label>Availability:</label><span class="available">  in stock</span></div>
 
         <div class="title"><a href="#">{{$product->detail}}</a></div>
@@ -245,6 +353,55 @@
         url="/cart/minCart/"+$id+"/1";
         window.location = url;
     }
+
+
+function Store(id_product){
+ var id=id_product;
+ var name=document.getElementById("name").value;
+ var email=document.getElementById("email").value;
+ var review=document.getElementById("review").value;
+ var rating=document.getElementsByName("score")[document.getElementsByName("score").length-1].value;
+
+var datareview ={'id':id,'name':name,'email':email,'review':review,'rating':rating};
+
+
+$.ajax({
+        // url: "insertData/insertMerchant.php",
+        url: "/insertReview",
+        type: "get",
+        beforeSend: function (xhr) {
+            var token = $('meta[name="csrf_token"]').attr('content');
+
+            if (token) {
+                  return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+            }
+        },
+        data: datareview,
+        success: function (response) {
+            console.log(response); 
+            document.getElementById("name").value="";
+            document.getElementById("email").value="";
+            document.getElementById("review").value="";
+            document.getElementsByName("score")[document.getElementsByName("score").length-1].value=5;
+
+            // document.getElementsByClassName("btn btn-danger fileinput-exists")[0].click();
+        //    swal("Congrats!", ", New Category Created!", "success");
+            var container = document.getElementById("comments");
+            var content = container.innerHTML;
+            container.innerHTML= content;
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+           console.log(textStatus, errorThrown);
+         //   swal("Error!", ", Failed Created New Category", "error");
+        }
+
+
+    });
+
+
+}
+
+
 </script>
 
 @stop

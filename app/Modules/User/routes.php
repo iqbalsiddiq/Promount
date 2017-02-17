@@ -10,17 +10,29 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::group(array('module'=>'User','namespace' => 'App\Modules\User\Controllers'), function() {
-    Route::get('/','HomeController@index');
+Route::group(array('module'=>'Admin','namespace' => 'App\Modules\User\Controllers'), function() {
+Route::get('/','HomeController@index');
 
 Route::get('/products', 'ProductController@index');
+Route::get('/insertReview', 'ProductController@insertReview');
+Route::get('/selectReview/{iditem}', 'ProductController@selectReview');
+Route::get('/selectRating/{iditem}', 'ProductController@selectRating');
+
 Route::get('/find', 'FindController@index');
 Route::get('/category', 'CategoryController@index');
+
 Route::get('/cart', 'CartController@index');
 Route::get('/cart/addCart/{id}/{quantity}', 'CartController@addCart');
 Route::get('/cart/minCart/{id}/{quantity}', 'CartController@minCart');
 Route::get('/cart/Delitem/{id}/{quantity}', 'CartController@Delitem');
+
 Route::get('/checkout', 'CheckoutController@index');
+// Route::get('/checkout/{id}', 'CheckoutController@checkout2');
+Route::get('/checkout/store', 'CheckoutController@store');
+// Route::post('api/sort_order_item', ['as' => 'api/sort_order_item', 'uses' =>'ApiController@SortOrderItem']);
+
+Route::get('/order', 'OrderController@index');
+
 Route::get('/signin', 'AuthenticationController@index');
 Route::get('/signin/signup/{email}/{pass}', 'AuthenticationController@signup');
 Route::get('/signin/confirmemail/{email}', 'AuthenticationController@confirmemail');

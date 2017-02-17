@@ -3,10 +3,8 @@
 namespace App\Modules\User\Controllers;
 
 use View;
-use Input;
-use DB;
 
-class ProductController extends PromountController {
+class OrderController extends PromountController {
     /*
       |--------------------------------------------------------------------------
       | DashboardController
@@ -68,45 +66,9 @@ class ProductController extends PromountController {
         View::share('js', $this->js);
         View::share('title', 'Promount: Deal and Discount for Everything');
         
-        return view('User::pages/blog-post');
+        return view('User::pages/checkout2');
     }
 
-
-    public function insertReview(){
-        $name=Input::get('name');
-        $email=Input::get('email');
-        $rating=Input::get('rating');
-        $review=Input::get('review'); 
-        $iditem=Input::get('id'); 
-
-        try{
-        $values = array('name' => $name,'email' => $email,'rating' => $rating,'review' => $review,'iditem' => $iditem);
-
-            DB::table('review')->insert($values);
-            echo "Insert SUCCESS ";
-        }catch (Exception $e){
-            echo "Insert Failed ";
-
-        }
-    }
     
-    public function selectReview($iditem){
 
-    $id=Input::get('iditem');
-    $item= DB::select("select * from item where iditem='$iditem';");
-
-    return $item;
-
-    }
-
-    public function selectRating($iditem){
-
-    $id=Input::get('iditem');
-    $review= DB::select("SELECT round(sum(rating)/count(1)) FROM review where iditem='$iditem';");
-
-    return $review;
-
-    }
-
-    // SELECT round(sum(rating)/count(1)) FROM `review` where iditem=1
 }
